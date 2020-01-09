@@ -1,0 +1,73 @@
+//KC03D5BA JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1    EXEC  PGM=ASSIST,PARM='MACRO=F'
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT   DD  SYSOUT=*
+//SYSIN      DD  *
+*************************************************
+*
+*  Program:     ASSIGN9
+*  Programmer:  Cory Stojan
+*
+************************************************************
+* NAME: STRCPY
+*
+* FUNCTION: COPY THE SOURCE STRING INTO THE
+*    DEST STRING. IT LOOKS FOR '00', TO END
+*
+* REG USED:
+*   4  PTR TO SOURCE
+*   5  PTR TO DEST
+**********************************************
+         MACRO
+         STRCPY &SOURCE,&DEST
+         AIF    ('&SOURCE' EQ '').ERROR       CHECK FOR VAILD DATA
+         AIF    ('&DEST' EQ '').ERROR         CHECK FOR VAILD DATA
+         STM    4,5,A&SYSNDX                  STORE PARMS
+         B      B&SYSNDX                      SKIP SAVE AREA
+A&SYSNDX DS     2F                            SAVE AREA
+B&SYSNDX LA     4,&SOURCE                     SAVE PTR TO SOURCE
+         LA     5,&DEST                       SAVE PTR TO DEST
+TOP&SYSNDX      DS   0H                       TOP OF LOOP
+         MVC    0(1,5),0(4)                   COPY CHAR
+         CLI    0(5),X'00'                    CHECK TO SEE IF '00'
+         BE     END&SYSNDX                    IF 00 END LOOP
+         A      4,=F'1'                       MOVE PTR OVER 1 CHAR
+         A      5,=F'1'                       MOVE PTR OVER 1 CHAR
+         B      TOP&SYSNDX                    GOTO TOP LOOP
+END&SYSNDX      DS   0H
+         LM     4,5,A&SYSNDX                  RESTORE REGISTERS
+         MEXIT                                EXIT MACRO
+.ERROR   MNOTE 'INVALID PARAMETER!!!'   ERRROR MISSING ARUGUMNT
+         MEND                                 END
+**********************************************
+* NAME: STRCPY
+*
+* FUNCTION: 3 WAY BRANCH, BRANCHES DEPENDING
+*            IF &VALUE IS POS, NEG, OR ZERO
+*
+**********************************************
+         MACRO
+         IF3   &VALUE,&NEG,&ZERO,&POS
+         AIF   ('&VALUE' EQ '').ERROR       CHECK FOR VAILD DATA
+         AIF   ('&NEG' EQ '').ERROR         CHECK FOR VAILD DATA
+         AIF   ('&ZERO' EQ '').ERROR        CHECK FOR VAILD DATA
+         AIF   ('&POS' EQ '').ERROR         CHECK FOR VAILD DATA
+         L     3,&VALUE                      LOAD &VALUE 
+         C     3,=F'0'                       COMPARE WITH ZERO
+         BE    EAQ&SYSNDX                    IF EQUAL BRANCH TO ZERO
+         BH    POS&SYSNDX                    IF POS BRANCH TO POS
+         BL    NEG&SYSNDX                    IF NEG BRANCH TO NEG
+EAQ&SYSNDX     DS    0H                      
+         B     &ZERO                         BRANCH
+POS&SYSNDX     DS    0H
+         B     &POS                          BRANCH
+NEG&SYSNDX     DS    0H
+         B     &NEG                          BRANCH
+END&SYSNDX     DS    0H
+         MEXIT                               EXIT?
+.ERROR   MNOTE 'INVALID PARAMETER!!!'
+         MEND                                END MACRO
+//          DD DSN=KC02314.SUMMER19.CSCI360.HW9.DRIVER,DISP=SHR
+//FT05F001  DD DUMMY
+//FT06F001  DD SYSOUT=*
+//     

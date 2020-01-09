@@ -1,0 +1,41 @@
+//KC03D5BA JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1    EXEC  PGM=ASSIST
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT   DD  SYSOUT=*
+//SYSIN      DD  *
+************************************************************
+*
+*  Program:     ASSIGN6
+*  Programmer:  CORY STOJAN
+************************************************************
+ENTRY   DSECT     Format for Table
+DIS     DS     CL30
+PROFIT  DS     CL5    35 bytes
+***********************************
+MAIN     CSECT
+         USING MAIN,15
+         ST    14,EXIT      Save Exit Location
+         LA    13,SAVEM     Set the save area
+         LA    1,TABLE      Start Loading params into PARMS
+         ST    1,PARMS
+         LA    1,EOT
+         ST    1,PARMS+4
+         LA    1,PARMS      End Loading Params into PARMS
+         L     10,=V(BUILD)
+         BALR  14,10 Branch to Build
+************************************************************
+BUILD    CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING BUILD,10  External register is R10
+         LA    14,SAVEB
+         ST    13,4(,14)
+         ST    14,8(,13)
+         LR    13,14
+*         
+         LM    7,8,0(1)    
+         USING ENTRY,7
+READ     XREAD BUFF,80    READ LINES
+         BL    REND       BRANCH IF END
+         LA    1,BUF
+*DIS         

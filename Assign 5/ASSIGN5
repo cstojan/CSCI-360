@@ -1,0 +1,240 @@
+//KC03D5BA JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1    EXEC  PGM=ASSIST
+//STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT   DD  SYSOUT=*
+//SYSIN      DD  *
+*************************************************
+*
+*  Program:     ASSIGN5
+*  Programmer:  Cory Stojan
+*
+*  Main:
+*  Register usage:
+*    1        Param list/XDECO
+*    2        Buffer
+*   10        location in program when branched
+*   13        main save
+*   14        DONT USE
+*   15        Base register
+************************************************************
+MAIN     CSECT
+         USING MAIN,15
+         ST    14,EXIT      SAVE EXIT LOCATION
+         LA    13,SAVEM     SET THE SAVE AREA
+         LA    1,TABLE      LOAD THE ADDRESS OF THE TABLE
+         ST    1,PARMS      STORE TABLE ADDRESS IN PARAMS
+         LA    1,EOT        LOAD ADDRESS OF EOT
+         ST    1,PARMS+4    STORE EOT IN PARAMS
+         LA    1,TABLELEN   LOAD ADDRESS OF TABLE LENGTH
+         ST    1,PARMS+8    STORE TABLE LENGTH IN PARAMS
+         LA    1,RESULT     LOAD ADDRESS OF RESULT
+         ST    1,PARMS+16   STORE RESULTS IN PARMS
+*
+         LA    1,PARMS      LOAD ADDRESS OF PARMS IN R13
+         L     10,=V(BUILD) LOAD BULD SUBROUTINE
+         BALR  14,10        BRANCH TO BUILD
+         LA    1,PARMS      RELOAD PARAMS TO R1
+         L     10,=V(PRINT) LOAD PRINT SUBROUTINE
+         BALR  14,10        BRANCH TO PRINT
+         L     10,=V(TALLY) LOAD TALLY SUBROUTINE
+         BALR  14,10        Branch to external
+         L     14,EXIT      Load exit location
+         BR    14           End program        
+*
+         LTORG              LITERALS
+TABLE    DS    71F'-16'
+EOT      DS    0H
+TABLELEN DS    F
+PARMS    DS    5F
+RESULT   DS    F
+SAVEM    DS    18F
+TOC      DC    CL30' '
+         DC    CL18'-Table of Contents'
+BUFF     DS    80C
+EXIT     DS    F
+***********************************
+*
+*  Build:
+*  Register usage:
+*    1        USED BY XDECI/PARMS
+*    2        NUMBER (BASE 10)
+*    3        ADDRESS OF TABLE
+*    4        EOT ADDRESS
+*    5        LENGTH OF TABLE ADDRESS
+*    6        COUNTER
+*   10        BASE
+*   13        SAVE LOCATION
+*   14        RETURN ADDRESS
+*   15        BASE REGISTER
+*
+***********************************
+BUILD    CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING BUILD,10
+         LM    3,5,0(1)     LOAD PARMS INTO R3, R4, AND R5
+         LA    14,SAVE
+         ST    13,4(0,14)
+         ST    14,8(0,13)
+         LR    13,14
+*
+         SR    6,6          CLEAR R6
+ALOOP    XREAD BUFFER,80    READ LINE
+         BL    BEND         BRANCH IF FAILED
+         LA    1,BUFFER     LOAD BUFFER INTO R1
+*
+BLOOP    XDECI 2,0(0,1)     READ NEXT NUMBER
+         BO    ALOOP        BRANCH IF FIALS
+         A     6,=F'1'      INCREASE COUNTER
+         ST    2,0(0,3)     STORE VALUE IN TABLE
+         LA    3,4(0,3)     MOVE TABLE POINTER TO NEXT SPOT
+         CR    3,4          COMPARE POINTER AND EOT
+         BE    BEND         END IF EQUAL
+         B     BLOOP        GO TO TOP OF THE LOOP
+*
+BEND     ST    6,0(0,5)     STORE ELEMENTS
+*
+         L     13,4(0,13)
+         LM    14,12,12(13)
+         BR    14           END SUBROUTINE
+*
+         LTORG              LITERALS
+BUFFER   DS    80C
+         DC    C'*'
+SAVE     DS    18F
+***********************************
+*
+*  Print
+*  Register usage:
+*    1        USED BY XDECI/PARMS
+*    2        LINE STRING LOCATION
+*    3        ADDRESS OF TABLE
+*    4        EOT ADDRESS
+*    5        LENGTH OF TABLE ADDRESS
+*    6        COUNTER FOR TABLE 
+*    7        VALUE FORM TABLE
+*   10        SUB BASE REGISTER
+*   13        SAVE AREA
+*   14        DONT USE
+*   15        MAIN BASE
+*
+***********************************
+PRINT    CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING PRINT,10
+         LM    3,5,0(1)     LOAD PARMS INTO 3,4,5
+         LA    14,SAVEC
+         ST    13,4(0,14)
+         ST    14,8(0,13)
+         LR    13,14
+*
+         XPRNT PHEAD,50     PRINT TOC
+         L     5,0(0,5)     LOAD TABLE LENGTH
+*
+PLOOP1   L     6,=F'6'      TABLE WIDTH
+         LA    2,PLINE+1    ADDRESS OF PLINE
+         MVI   PLINE+1,C' ' CLEAR LINE
+         MVC   PLINE+2(83),PLINE+1
+         C     5,=F'0'      CHECK IF VALUES WERE PRINTED
+         BE    PEND
+*
+PLOOP2   C     5,=F'0'      CHECK IF ALL VALUES PRINTED
+         BE    PEND1
+         L     7,0(0,3)     GET VALUE FROM TABLE
+         XDECO 7,TEMP       CHANGE TO BASE 10
+         MVC   0(12,2),TEMP STORE IN PRINT LINE
+         LA    2,12(0,2)    ADVANCE PLINE POINTER
+         LA    3,4(0,3)     ADVANCE TABLE POINTER
+         S     5,=F'1'      DECREASE TABLE LENGTH COUNTER
+         S     6,=F'1'      DECREASE LINE WIDTH COUNTER
+         C     6,=F'0'      IS LINE FILLED
+         BNE   PLOOP2       GO TO TOP OF LOOP
+         XPRNT PLINE,85     PRINT LINE
+         B     PLOOP1       GO TO TOP OF LOOP
+*
+PEND1    XPRNT PLINE,85     PRINT PLINE
+PEND     DS    0H
+*
+         L     13,4(0,13)
+         LM    14,12,12(13)
+         BR    14           END OF SUBROUTINE
+*
+         LTORG              LITERALS
+PHEAD    DC    CL2'1' 
+         DC    CL30' '
+         DC    CL18' Table of Contents'
+PLINE    DC    CL1'0'
+         DS    CL84' '
+TEMP     DS    CL12' '
+SAVEC    DS    18F'0'
+***********************************
+*
+*  TALLY
+*  Register usage:
+*    3        TABLE POINTER
+*    4        EOT
+*    5        TABLE LENGTH
+*    7        TABLE VALUE
+*    8        USED FOR CACULATIONS
+*    9        NUMBER OF MULTIPLES
+*   12        BASE
+*   11        COUNTER
+*   13        Save Area
+*   14        DONT USE
+*   15        BASE REGISTER
+*
+***********************************
+TALLY    CSECT
+         STM   14,12,12(13)
+         LR    12,15
+         USING TALLY,10
+         LM    3,6,0(1)     LOAD PARAMS INTO R3-R6
+         LA    14,SAVED
+         ST    13,4(0,14)
+         ST    14,8(0,13)
+         LR    13,14
+*
+MULTI    XREAD BUFFT,80   READ THE BUFFER
+         BL    TEND
+         LR    7,3
+         SR    11,11
+         SR    9,9
+         XDECI 2,BUFFT
+         C     2,=F'-987654321'
+         BE    MULTI
+LOOP1    CR    7,4        COMPARE WITH EOT
+         BE    RESULTT
+         L     9,0(0,7)   LOAD NON TABLE NUMBER
+         M     8,=F'1'    MAKE R8 READY TO DIVIDE
+         DR    8,2        DIVIDE R8 BY R6
+         C     8,=F'0'    FIND IF THERE IS A REMAINDER
+         BE    RESULT1    IF SO BRANCH TO RESULT
+         LA    7,4(0,7)   ADVANCE POINTER
+         B     LOOP1
+RESULT1  A     11,=F'1'
+         LA    7,4(0,7)   ADVANCE POINTER
+         B     LOOP1
+*
+RESULTT  XDECO 11,MULTIPA
+         XDECO 2,MULTIPC
+         XPRNT MULTIP,49
+         B     MULTI
+*
+TEND     DS    0H           END OF COMPARING
+         L     13,4(0,13)
+         LM    14,12,12(13)
+         BR    14           END OF SUBROUTINE
+*
+         LTORG              LITERALS
+BUFFT    DS    80C
+SAVED    DS    18F
+MULTIP   DC    CL11'-There are '
+MULTIPA  DS    CL12
+         DC    CL14' multiples of '
+MULTIPC  DS    CL12
+***********************************
+         END   MAIN
+/*
+//FT05F001  DD  DSN=KC02314.SUMMER19.CSCI360.HW5DATA,DISP=SHR
+//

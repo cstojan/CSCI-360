@@ -1,0 +1,156 @@
+//KC03D5B JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1 EXEC PGM=ASSIST
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSIN DD *
+********************************************
+*  PROGRAM: 3
+*  NAME:  CORY STOJAN
+*
+*  Register Usage
+*  1 XDECI
+*  2 ORDER ID
+*  3 PRODUCT ID
+*  4 NUM ORDERED
+*  5 PRICE
+*  7 COMPUTATION
+*  8 FREE SHIP TOT
+*  9 SHIPPING
+*  10 DISCOUNT TOT
+*  11 FINTAL TOT
+*  12 COUNTER
+*  13 PRE TOT
+*  
+*
+********************************************
+MAIN     CSECT                                                          
+         USING MAIN,15                                                  
+         TITLE 'CORY STOJAN, CSCI 360, PROGRAM 3'                       
+         EJECT                                                          
+         SPACE                                                          
+         XPRNT WTITLE,65                                                
+         SR    6,6                     SET REGISTER = ZERO              
+         SR    7,7                     SET REGISTER = ZERO              
+         SR    8,8                     SET REGISTER = ZERO              
+         SR    13,13                   SET REGISTER = ZERO              
+         SR    12,12                   SET REGISTER = ZERO              
+         SR    11,11                   SET REGISTER = ZERO              
+         XPRNT HDR,105                 PRINT OUT HEADDER                
+LOOP     XREAD BUFFER,80               READ INPUT FILE                  
+         BC    B'0100',ENDLOOP         IF EOF GO TO ENDLOOP             
+*                                                                       
+         XDECI 2,BUFFER                PRODUCT ID                       
+         XDECO 2,ORDID                 OUTPUT PRODUCT ID                
+         XDECI 3,0(1)                  ORDER ID                         
+         XDECO 3,PROID                 OUTPUT ORDER ID                  
+         XDECI 4,0(1)                  NUMBER ORDERED                   
+         XDECO 4,NUMORD                OUTPUT NUMBER ORDERED            
+         XDECI 5,0(1)                  PRICE IN CENTS                   
+         XDECO 5,EAPRI                 OUTPUT PRICE OF EACH             
+*                                                                       
+         SR 9,9                        RESET REGISTER                   
+         SR 10,10                      RESET REGISTER                   
+*                                                                       
+         LR    7,4                     LOAD NUM ORDERED IN R7           
+         M     6,=F'1'                 SET R6&R7 TO 64 BIT              
+         MR    6,5                     MULTIPLY R6 AND R5               
+         LR    13,7                    STORE RESULT IN R13 (PRETOTAL)   
+         A     12,=F'1'                INCREASE COUNTER                 
+*                                                                       
+DIS1     C     13,PREDIS               COMPARE PRETOTAL FOR DICOUNT1    
+         BC    B'0100',DIS2            SKIP IF UNQUALIFIED              
+         A     10,=F'600'              ADD TO DISCOUNT TOTAL IF QULIFIS 
+*                                                                       
+DIS2     C     3,IDDIS                 COMPARE FOR DISCOUNT 2           
+         BNE   SHIP                    SKIP IF UNQUALIFIED              
+         A     10,=F'1000'             ADD TO DISCOUNT TOTAL IF QUALIFS 
+*                                                                       
+SHIP     C     13,TOTSHP               COMPARE FOR SHIPPING COSTS       
+         BC    B'0100',FRSHP           IF NOT NEEDED, INCREASE COUNTER  
+         A     8,=F'1'                                                  
+         C     13,TOTSHP               COMPARE AGIAN TO APPLY SHIPPING  
+FRSHP    BC    B'1010',OUTPUT          SKIP TO OUTPUT IF NOT NEEDED     
+         A     9,=F'500'               ADD IF NEEDED                    
+*                                                                       
+OUTPUT   XDECO 10,DISC                 DISCOUNT                         
+         XDECO 9,SHIPIN                SHIPPING                         
+         SR    13,10                   SUBTRACT DISCOUNT                
+         AR    13,9                    ADD SHIPPING                     
+         XDECO 13,SALTOT               TOTAL                            
+         XPRNT OPRNT,108               PRINT OUT THE VALUES             
+         AR    11,13                   ADD TO GRAND TOTAL               
+*                                                                       
+         BC    B'1111',LOOP            GO TO TOP OF LOOP                
+*                                                                       
+ENDLOOP  LR    7,11                    FIND OUT AVERAGE                 
+         M     6,=F'1'                 SET R6 TO 64 BIT                 
+         DR    6,12                    DIVIDE 6 BY TOTAL NUM            
+         LR    2,7                     STORE QUOTENT IN R2              
+         LR    3,6                     STORE REMAINDER IN R3            
+         SR    6,6                     RESET R6                         
+         SR    7,7                     RESET R7                         
+         LR    6,3                     LOAD REMAINDER INTO R7           
+         M     6,=F'1'                 SET R6 TO 64 BIT                 
+         M     6,=F'2'                 MULTIPLY BY 2                    
+         C     6,12                    COMPARE RESULT WITH DIVISOR      
+         BC    B'1100',GOTOA           IF LESS THAN GO TO GOTOA         
+         A     2,=F'1'                 ELSE ADD 1 TO QUOTENT            
+*                                                                      
+GOTOA    XDECO 12,NUMSAL               TOTAL AMOUNT OF SALES OUTPUT     
+         XPRNT SMES1,40                PRINT TOTAL NUMBER OF SALES      
+         XDECO 8,SHPFRE                TOTAL AMOUNT OF FREE SHIPPING   
+         XPRNT SMES2,40                PRINT FREE SHIPPING NUMBER       
+         XDECO 11,GTOT                 GRAND TOTAL OF SALES            
+         XPRNT SMES3,40                PRINT GRAND TOTAL MESSAGE        
+         XDECO 2,SALAVG                SALES AVERAGE                   
+         XPRNT SMES4,40                PRINT MESSAGE FOR SALES AVERAGE 
+*                                                                       
+*        XDUMP                                                        
+         BR    14                                                     
+         LTORG                                                        
+OPRNT    DC    CL3'0'
+ORDID    DS    CL12                    ORDER ID                        
+         DC    CL3' '
+PROID    DS    CL12                    PRODUCT ID                     
+         DC    CL3' '
+EAPRI    DS    CL12                    EACH PRICE OF ITEM           
+         DC    CL3' '
+NUMORD   DS    CL12                    NUMBER OF ORDERS                
+         DC    CL3' '
+DISC     DS    CL12                    DISCOUNT                       
+         DC    CL3' '                                                   
+SHIPIN   DS    CL12                    SHIPPING AMOUNT                  
+         DC    CL3' '                                                
+SALTOT   DS    CL12                    SALES TOTAL                    
+HDR      DC    CL5' '                                                  
+         DC    CL8'ORDER ID'                                         
+         DC    CL6' '
+         DC    CL12' PRODUCT ID'       HEADDER                         
+         DC    CL5' '
+         DC    CL11'PRICE EACH'                                        
+         DC    CL5' '
+         DC    CL14'NUMBER ORDERED'                                   
+         DC    CL5' '
+         DC    CL8'DISCOUNT'                                            
+         DC    CL5' '
+         DC    CL8'SHIPPING'                                            
+         DC    CL8' '
+         DC    CL7'TOTAL'                                               
+IDDIS    DC    F'566824'               DISCOUNT ID CONSTANT             
+PREDIS   DC    F'12500'                PRE DISCOUNT AMOUNT             
+TOTSHP   DC    F'7500'                 MAX BEFORE SHIPPING CHARGE      
+SMES1    DC    CL28'-TOTAL NUMBER OF SALES:'      DISPLAY MESSAGE 1     
+NUMSAL   DS    CL12                    NUMBER OF SLAES                 
+SMES2    DC    CL28'-NUMBER WITH FREE SHIPPING:'  DISPLAY MESSAGE 2   
+SHPFRE   DS    CL12                    SHIP FREE AMOUNT                
+SMES3    DC    CL28'-SUM OF ALL SALES:'           DISPLAY MESSAGE 3    
+GTOT     DS    CL12                    GRAND TOTAL AMOUNT              
+SMES4    DC    CL28'-AVERAGE SALE TOTAL:'         DISPLAY MESSAGE 4   
+SALAVG   DS    CL12                    SALES AVERAGE                    
+WTITLE   DC    CL36' '                                                
+         DC    CL29' SALES REPORT --WIDGETS-R-US'                      
+BUFFER   DS    0C                      BUFFER                          
+         END   MAIN                    END
+/*                                                                      
+//FT05F001  DD  DSN=KC02314.SUMMER19.CSCI360.HW3DATA,DISP=SHR
+// 

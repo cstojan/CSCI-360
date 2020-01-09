@@ -1,0 +1,248 @@
+1                    J E S 2  J O B  L O G  --  S Y S T E M  S 0 W 1  --  N O D E  Z O S K C T R         
+0 
+ 15.10.43 JOB02092 ---- TUESDAY,   09 JUL 2019 ----
+ 15.10.43 JOB02092  IRR010I  USERID KC03D5B  IS ASSIGNED TO THIS JOB.
+ 15.10.43 JOB02092  ICH70001I KC03D5B  LAST ACCESS AT 15:10:26 ON TUESDAY, JULY 9, 2019
+ 15.10.43 JOB02092  $HASP373 KC03D5BM STARTED - INIT 2    - CLASS A        - SYS S0W1
+ 15.10.43 JOB02092  -                                         --TIMINGS (MINS.)--            ----PAGING COUNTS---
+ 15.10.43 JOB02092  -JOBNAME  STEPNAME PROCSTEP    RC   EXCP    TCB    SRB  CLOCK   SERV  PG   PAGE   SWAP    VIO SWAPS
+ 15.10.43 JOB02092  -KC03D5BM                      00     68 ******    .00     .0    252   0      0      0      0     0
+ 15.10.43 JOB02092  -KC03D5BM ENDED.  NAME-CORY STOJAN          TOTAL TCB CPU TIME=   .00  TOTAL ELAPSED TIME=    .0
+ 15.10.43 JOB02092  $HASP395 KC03D5BM ENDED
+0------ JES2 JOB STATISTICS ------
+-  09 JUL 2019 JOB EXECUTION DATE
+-          169 CARDS READ
+-          244 SYSOUT PRINT RECORDS
+-            4 SYSOUT PUNCH RECORDS
+-           19 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D5BM JOB ,'CORY STOJAN',MSGCLASS=H                                JOB02092
+         2 //STEP1 EXEC PGM=ASSIST                                                         
+         3 //STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                                
+         4 //SYSPRINT DD SYSOUT=*                                                          
+         5 //SYSIN DD *                                                                    
+         6 //FT05F001  DD  DSN=KC02314.SUMMER19.CSCI360.HW4DATA,DISP=SHR                   
+ ICH70001I KC03D5B  LAST ACCESS AT 15:10:26 ON TUESDAY, JULY 9, 2019
+ IEF236I ALLOC. FOR KC03D5BM STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IGD103I SMS ALLOCATED TO DDNAME FT05F001
+ IEF142I KC03D5BM STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D5B.KC03D5BM.JOB02092.D0000102.?         SYSOUT        
+ IEF285I   KC03D5B.KC03D5BM.JOB02092.D0000101.?         SYSIN         
+ IGD104I KC02314.SUMMER19.CSCI360.HW4DATA             RETAINED,  DDNAME=FT05F001
+ IEF373I STEP/STEP1   /START 2019190.1510
+ IEF032I STEP/STEP1   /STOP  2019190.1510 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   268K  EXT:        4K  SYS:    11504K
+         ATB- REAL:                     0K  SLOTS:                     0K
+              VIRT- ALLOC:       0M SHRD:       0M
+ IEF375I  JOB/KC03D5BM/START 2019190.1510
+ IEF033I  JOB/KC03D5BM/STOP  2019190.1510 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ********************************************                                             
+                                       2 *                                                                                        
+                                       3 *  PROGRAM: ASSIGN4                                                                      
+                                       4 *  PROGRAMMER: CORY STOJAN                                                               
+                                       5 *                                                                                        
+                                       6 *  MAIN                                                                                  
+                                       7 *  REGISTER USAGE:                                                                       
+                                       8 *  1   XDECI                                                                             
+                                       9 * 11   LOCATION OF PROGRAMS WHEN BRANCHED                                                
+                                      10 * 13   LOCATION OF PARAMATERS                                                            
+                                      11 * 14   LOCATION OF MAIN PROGRAM ADDRESS BREAK                                            
+                                      12 * 15   BASE REGISTER                                                                     
+                                      13 *************************************************                                        
+ 000000                               14 MAIN     CSECT                                                                           
+ 000000                               15          USING MAIN,15                                                                   
+ 000000 41D0 F15C            0015C    16          LA    13,TABLE        LOAD ADDRESS OF TABLE                                     
+ 000004 50D0 F2E8            002E8    17          ST    13,PARMS        STORE THE ADDRESS IN PARMS                                
+ 000008 41D0 F27C            0027C    18          LA    13,EOT          LOAD END OF TABLE ADDRESS                                 
+ 00000C 50D0 F2EC            002EC    19          ST    13,PARMS+4      STORE EOT ADDRESS IN PARAMS                               
+ 000010 41D0 F27C            0027C    20          LA    13,TABLELEG     LOAD TABLE LENGTH                                         
+ 000014 50D0 F2F0            002F0    21          ST    13,PARMS+8      STORE TABLE LENGTH IN PARMS                               
+ 000018 41D0 F2E8            002E8    22          LA    13,PARMS        ADDRESS OF PARAMS IN R13                                  
+ 00001C 45B0 F02A            0002A    23          BAL   11,BUILD        BUILD TABLE                                               
+ 000020 45B0 F062            00062    24          BAL   11,PRINT        PRINT TABLE                                               
+ 000024 45B0 F0CA            000CA    25          BAL   11,EVENS        PRINT EVEN NUMBER IN TABLE                                
+ 000028 07FE                          26          BR    14              END OF THE PROGRAM                                        
+                                      27 *************************************************                                        
+                                      28 *                                                                                        
+                                      29 *                                                                                        
+                                      30 * REGISTER USAGE                                                                         
+                                      31 *  1  XDECI                                                                              
+                                      32 *  2  USED TO CONVERT TO BASE 10                                                         
+                                      33 *  3  TABLE ADDRESS                                                                      
+                                      34 *  4  END OF TABLE ADDRESS                                                               
+                                      35 *  5  LENGTH OF TABLE                                                                    
+                                      36 *  6  COUNTER REGISTER                                                                   
+                                      37 * 10  USED FOR RETURN ADDRESS                                                            
+                                      38 * 13  LOCATION OF PARAMS                                                                 
+                                      39 * 14  STORES ADDRESS OF MAIN PROGRAM DONT USE                                            
+                                      40 * 15  BASE REGISTER                                                                      
+                                      41 *                                                                                        
+                                      42 ***************************************                                                  
+ 00002A                               43 BUILD     DS    0H           BUILD SUBROUTINE                                            
+ 00002A 1B66                          44           SR    6,6          RESET R6                                                    
+ 00002C 9835 D000            00000    45           LM    3,5,0(13)    LOADS PARMS                                                 
+ 000030 E000 F331 0050 00331          46 BLOOP1    XREAD BUFFER,80    READ A LINE                                                 
+ 000036 4740 F05C            0005C    47           BL    BEND         CHECK IF FAILS                                              
+ 00003A 4110 F331            00331    48           LA    1,BUFFER     LOAD THE ADDRESS OF BUFFER                                  
+ 00003E 5320 1000            00000    49 BLOOP2    XDECI 2,0(0,1)     READ A NUMBER                                               
+ 000042 4710 F030            00030    50           BO    BLOOP1       CHECK IF IT FAILS                                           
+ 000046 5A60 F148            00148    51           A     6,=F'1'      INCREASE COUNTER BY ONE                                     
+ 00004A 5020 3000            00000    52           ST    2,0(0,3)     STORE IN TABLE                                              
+1                                                                                                               PAGE    2         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 00004E 4130 3004            00004    53           LA    3,4(0,3)     ADVANCE TO NEXT SPOT                                        
+ 000052 1934                          54           CR    3,4          COMPARE TO EOT                                              
+ 000054 4780 F05C            0005C    55           BE    BEND         IF EOT END BUILD SUBROUTINE                                 
+ 000058 47F0 F03E            0003E    56           B     BLOOP2       GO TO TOP OF LOOP IF NOT EOT                                
+ 00005C 5060 5000            00000    57 BEND      ST    6,0(0,5)     STORE ELEMENTS                                              
+ 000060 07FB                          58           BR    11           END SUBROUTINE                                              
+                                      59 *************************************************                                        
+                                      60 *                                                                                        
+                                      61 *   REGISTER USAGE                                                                       
+                                      62 *    1  XDECI                                                                            
+                                      63 *    2  LINE LOCATION                                                                    
+                                      64 *    3  TABLE ADDRESS                                                                    
+                                      65 *    4  EOT ADDRESS                                                                      
+                                      66 *    5  LENGTH OF TABLE                                                                  
+                                      67 *    6  WIDTH OF TABLE COUNTER                                                           
+                                      68 *    7  NUMBER TO BE IN TABLE                                                            
+                                      69 *   11  RETURN ADDRESS                                                                   
+                                      70 *   13  PARAMS                                                                           
+                                      71 *   14  ADDRESS FOR MAIN ROUTINE DONT USE                                                
+                                      72 *   15  BASE REGISTER                                                                    
+                                      73 *                                                                                        
+                                      74 ***********************************************                                          
+ 000062                               75 PRINT     DS    0H             PRINT SUBROUTINE                                          
+ 000062 E020 F280 002C 00280          76           XPRNT PHEAD,44       PRINT HEAD OF TABLE                                       
+ 000068 9835 D000            00000    77           LM    3,5,0(13)      LOAD PARAMS                                               
+ 00006C 5850 5000            00000    78           L     5,0(0,5)       LOAD TABLE LENGTH                                         
+ 000070 5860 F14C            0014C    79 PLOOP1    L     6,=F'8'        COUNTER FOR TABLE                                         
+ 000074 4120 F2F5            002F5    80           LA    2,PLINE+1      ADDRESS OF PRINT LINE                                     
+ 000078 9240 F2F5      002F5          81           MVI   PLINE+1,C' '   CLEAR THE PRINT LINE                                      
+ 00007C D246 F2F6 F2F5 002F6 002F5    82           MVC   PLINE+2(71),PLINE+1                                                      
+ 000082 5950 F150            00150    83           C     5,=F'0'        CHECK IF VALUE WAS PRINTED                                
+ 000086 4780 F0C8            000C8    84           BE    PEND           END IF IT WAS                                             
+ 00008A 5950 F150            00150    85 PLOOP2    C     5,=F'0'        CHECK IF VALUE WAS PRINTED                                
+ 00008E 4780 F0C2            000C2    86           BE    PEND1          END IF IT WAS                                             
+ 000092 5870 3000            00000    87           L     7,0(0,3)       GET VALUE FROM TABLE                                      
+ 000096 5270 F2DC            002DC    88           XDECO 7,TEMPCAR      CHANGE TO BASE 10                                         
+ 00009A D20B 2000 F2DC 00000 002DC    89           MVC   0(12,2),TEMPCAR  STORE IN PRINT LINE                                     
+ 0000A0 4120 200C            0000C    90           LA    2,12(0,2)      MOVE TO POINTER IN LINE                                   
+ 0000A4 4130 3004            00004    91           LA    3,4(0,3)       MOVE TO TABLE POINTER                                     
+ 0000A8 5B50 F148            00148    92           S     5,=F'1'        DECREASE LENGTH COUNTER                                   
+ 0000AC 5B60 F148            00148    93           S     6,=F'1'        DECREASE WIDTH COUNTER                                    
+ 0000B0 5960 F148            00148    94           C     6,=F'1'        CHECK IF LINE IS FULL                                     
+ 0000B4 4770 F08A            0008A    95           BNE   PLOOP2         GO TO PLOOP2                                              
+ 0000B8 E020 F2F4 0055 002F4          96           XPRNT PLINE,85       PRINT LINE                                                
+ 0000BE 47F0 F070            00070    97           B     PLOOP1         GO TO TOP OF LOOP                                         
+ 0000C2 E020 F2F4 0049 002F4          98 PEND1     XPRNT PLINE,73       PRINT PLINE                                               
+ 0000C8 07FB                          99 PEND      BR    11             END SUBROUTINE                                            
+                                     100 *************************************************                                        
+                                     101 *                                                                                        
+                                     102 * REGISTER USAGE                                                                         
+                                     103 *   1  XDECI                                                                             
+                                     104 *   2  LOCATION OF STRING                                                                
+                                     105 *   3  TABLE ADDRESS                                                                     
+                                     106 *   4  EOT ADDRESS                                                                       
+                                     107 *   5  LENGTH OF TABLE                                                                   
+                                     108 *   6  VARIABLE FOR TABLE                                                                
+                                     109 *   7  DIVIDING ADDRESS                                                                  
+1                                                                                                               PAGE    3         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     110 *   8  WIDTH COUNTER                                                                     
+                                     111 *  11  RETURN ADDRESS                                                                    
+                                     112 *  13  PARMS                                                                             
+                                     113 *  14  ADDRESS FOR MAIN ROUTINE DONT USE                                                 
+                                     114 *  15  BASE REGISTER                                                                     
+                                     115 *                                                                                        
+                                     116 ****************************************************                                     
+ 0000CA                              117 EVENS     DS    0H          START OF EVENS  ROUTINE                                      
+ 0000CA E020 F2AC 0030 002AC         118           XPRNT OHEAD,48    PRINT TABLE HEAD                                             
+ 0000D0 9835 D000            00000   119           LM    3,5,0(13)   LOAD PARAMS                                                  
+ 0000D4 5850 5000            00000   120           L     5,0(0,5)    LENGTH OF TABLE                                              
+ 0000D8 5880 F154            00154   121 EVEN1     L     8,=F'5'     COUNTER FOR TABLE WIDTH                                      
+ 0000DC 4120 F2F5            002F5   122           LA    2,PLINE+1   POINTER TO PLINE                                             
+ 0000E0 9240 F2F5      002F5         123           MVI   PLINE+1,C' '  CLEAR PRINT LINE                                           
+ 0000E4 D246 F2F6 F2F5 002F6 002F5   124           MVC   PLINE+2(71),PLINE+1                                                      
+ 0000EA 5950 F150            00150   125           C     5,=F'0'     CHECK TO SEE IF VALE WAS PRINTED                             
+ 0000EE 4780 F144            00144   126           BE    ESEND       GO TO EVENS SEND IF PRINTED                                  
+ 0000F2 5950 F150            00150   127 EVEN2     C     5,=F'0'     CHECK IF TABLE WAS PRINTED                                   
+ 0000F6 4780 F13E            0013E   128           BE    ESEND1      GO TO ESEND IF PRINTED                                       
+ 0000FA 5870 3000            00000   129           L     7,0(0,3)    LOAD NUMBER                                                  
+ 0000FE 5B50 F148            00148   130           S     5,=F'1'     DECREASE TABLE LENGTH                                        
+ 000102 5C60 F148            00148   131           M     6,=F'1'     SET REGISTER TO 64 BIT                                       
+ 000106 5D60 F158            00158   132           D     6,=F'2'     CHECK IF NUMBER IS EVEN                                      
+ 00010A 5960 F150            00150   133           C     6,=F'0'     CHECK IF NUMBER IS EVEN                                      
+ 00010E 4770 F128            00128   134           BNE   SKIP        GO TO SKIP IF IT IS                                          
+ 000112 5860 3000            00000   135           L     6,0(0,3)    LOAD CURRENT NUMBER                                          
+ 000116 5260 F2DC            002DC   136           XDECO 6,TEMPCAR   OUTPUT NUMBER                                                
+ 00011A D20B 2000 F2DC 00000 002DC   137           MVC   0(12,2),TEMPCAR  STORE DEC IN PRINT LINE                                 
+ 000120 4120 200C            0000C   138           LA    2,12(0,2)   ADVANCE TO LINE POINTER                                      
+ 000124 5B80 F148            00148   139           S     8,=F'1'     DECREASE LINE COUNTER                                        
+ 000128 4130 3004            00004   140 SKIP      LA    3,4(0,3)    ADVANCE TO TABLE POINTER                                     
+ 00012C 5980 F150            00150   141           C     8,=F'0'     CHECK IF PLINE IS FULL                                       
+ 000130 4770 F0F2            000F2   142           BNE   EVEN2       GO TO EVEN2                                                  
+ 000134 E020 F2F4 0049 002F4         143           XPRNT PLINE,73    PRINT PLINE                                                  
+ 00013A 47F0 F0D8            000D8   144           B     EVEN1       GO TO TOP OF LOOP                                            
+ 00013E E020 F2F4 003D 002F4         145 ESEND1    XPRNT PLINE,61    PRINT LINE                                                   
+ 000144 07FB                         146 ESEND     BR    11          END OF SUBROUTINE                                            
+                                     147 *****************************************                                                
+                                     148           LTORG                                                                          
+ 000148 00000001                     149                =F'1'                                                                     
+ 00014C 00000008                     150                =F'8'                                                                     
+ 000150 00000000                     151                =F'0'                                                                     
+ 000154 00000005                     152                =F'5'                                                                     
+ 000158 00000002                     153                =F'2'                                                                     
+ 00015C                              154 TABLE     DS    72F'-16'                                                                 
+ 00027C                              155 EOT       DS    0H                                                                       
+ 00027C                              156 TABLELEG  DS    F'0'                                                                     
+ 000280 F140404040404040             157 PHEAD     DC    CL44'1                            List of Numbers'                       
+ 0002AC F140404040404040             158 OHEAD     DC    CL48'1                            List of Even Numbers'                  
+ 0002DC                              159 TEMPCAR   DS    CL12' '                                                                  
+ 0002E8                              160 PARMS     DS    F'0'                                                                     
+ 0002EC                              161           DS    F'0'                                                                     
+ 0002F0                              162           DS    F'0'                                                                     
+ 0002F4 F0                           163 PLINE     DC    CL1'0'                                                                   
+ 0002F5                              164           DS    CL60' '                                                                  
+ 000331                              165 BUFFER    DS    80C                                                                      
+ 000381 5C                           166           DC    C'*'                                                                     
+1                                                                                                               PAGE    4         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     167           END   MAIN                                                                     
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:    7612 HIGH:     908 LEAVING:  485048 FREE BYTES. AVERAGE:       50 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,   168000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+1                            List of Numbers                                                                                      
+0          15         492          27        3926           6        6429        -123                                             
+0          22       -1393         229       -3784           5          91          62                                             
+0          25          -5          57         545           3           6           3                                             
+0        9932          -9          94        -434           2          -6         441                                             
+0        8440          71          27          53         683           1          19                                             
+0          -5       -2618        2921           4        -193          -4        6491                                             
+0       -1936          28         -58         -35           3         -76        4613                                             
+0          -4           9           3        -499           0         786        -464                                             
+0           8           9           0          -1         305           6           6                                             
+0           7           6        5550       -3881         660         -99          13                                             
+0        2926           0                                                                                                         
+1                            List of Even Number                                                                                  
+0         492        3926           6          22       -3784                                                                     
+0          62           6        9932          94        -434                                                                     
+0           2          -6        8440       -2618           4                                                                     
+0          -4       -1936          28         -58         -76                                                                     
+0          -4           0         786        -464           8                                                                     
+0           0           6           6           6        5550                                                                     
+0         660        2926           0                                                                                             
+0*** EXECUTION TIME =    0.001 SECS.      2566 INSTRUCTIONS EXECUTED -  2566000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ:   8418   2     0   -301   55                                                                            
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                

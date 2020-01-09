@@ -1,0 +1,170 @@
+//KC03D5B JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1 EXEC PGM=ASSIST
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSIN DD *
+********************************************
+*
+*  PROGRAM: ASSIGN4
+*  PROGRAMMER: CORY STOJAN
+*
+*  MAIN
+*  REGISTER USAGE:
+*  1   XDECI
+* 11   LOCATION OF PROGRAMS WHEN BRANCHED
+* 13   LOCATION OF PARAMATERS
+* 14   LOCATION OF MAIN PROGRAM ADDRESS BREAK
+* 15   BASE REGISTER
+*************************************************
+MAIN     CSECT
+         USING MAIN,15
+         LA    13,TABLE        LOAD ADDRESS OF TABLE
+         ST    13,PARMS        STORE THE ADDRESS IN PARMS
+         LA    13,EOT          LOAD END OF TABLE ADDRESS
+         ST    13,PARMS+4      STORE EOT ADDRESS IN PARAMS
+         LA    13,TABLELEG     LOAD TABLE LENGTH
+         ST    13,PARMS+8      STORE TABLE LENGTH IN PARMS
+         LA    13,PARMS        ADDRESS OF PARAMS IN R13
+         BAL   11,BUILD        BUILD TABLE
+         BAL   11,PRINT        PRINT TABLE
+         BAL   11,EVENS        PRINT EVEN NUMBER IN TABLE
+         BR    14              END OF THE PROGRAM
+*************************************************
+*
+*
+* REGISTER USAGE
+*  1  XDECI
+*  2  USED TO CONVERT TO BASE 10
+*  3  TABLE ADDRESS
+*  4  END OF TABLE ADDRESS
+*  5  LENGTH OF TABLE
+*  6  COUNTER REGISTER
+* 10  USED FOR RETURN ADDRESS
+* 13  LOCATION OF PARAMS
+* 14  STORES ADDRESS OF MAIN PROGRAM DONT USE
+* 15  BASE REGISTER
+*
+***************************************
+BUILD     DS    0H           BUILD SUBROUTINE
+          SR    6,6          RESET R6
+          LM    3,5,0(13)    LOADS PARMS
+BLOOP1    XREAD BUFFER,80    READ A LINE
+          BL    BEND         CHECK IF FAILS
+          LA    1,BUFFER     LOAD THE ADDRESS OF BUFFER
+BLOOP2    XDECI 2,0(0,1)     READ A NUMBER
+          BO    BLOOP1       CHECK IF IT FAILS
+          A     6,=F'1'      INCREASE COUNTER BY ONE
+          ST    2,0(0,3)     STORE IN TABLE
+          LA    3,4(0,3)     ADVANCE TO NEXT SPOT
+          CR    3,4          COMPARE TO EOT
+          BE    BEND         IF EOT END BUILD SUBROUTINE
+          B     BLOOP2       GO TO TOP OF LOOP IF NOT EOT
+BEND      ST    6,0(0,5)     STORE ELEMENTS
+          BR    11           END SUBROUTINE
+*************************************************
+*
+*   REGISTER USAGE
+*    1  XDECI
+*    2  LINE LOCATION
+*    3  TABLE ADDRESS
+*    4  EOT ADDRESS
+*    5  LENGTH OF TABLE
+*    6  WIDTH OF TABLE COUNTER
+*    7  NUMBER TO BE IN TABLE
+*   11  RETURN ADDRESS
+*   13  PARAMS
+*   14  ADDRESS FOR MAIN ROUTINE DONT USE
+*   15  BASE REGISTER
+*
+***********************************************
+PRINT     DS    0H             PRINT SUBROUTINE
+          XPRNT PHEAD,44       PRINT HEAD OF TABLE
+          LM    3,5,0(13)      LOAD PARAMS
+          L     5,0(0,5)       LOAD TABLE LENGTH
+PLOOP1    L     6,=F'8'        COUNTER FOR TABLE
+          LA    2,PLINE+1      ADDRESS OF PRINT LINE
+          MVI   PLINE+1,C' '   CLEAR THE PRINT LINE
+          MVC   PLINE+2(71),PLINE+1
+          C     5,=F'0'        CHECK IF VALUE WAS PRINTED
+          BE    PEND           END IF IT WAS
+PLOOP2    C     5,=F'0'        CHECK IF VALUE WAS PRINTED
+          BE    PEND1          END IF IT WAS
+          L     7,0(0,3)       GET VALUE FROM TABLE
+          XDECO 7,TEMPCAR      CHANGE TO BASE 10
+          MVC   0(12,2),TEMPCAR  STORE IN PRINT LINE
+          LA    2,12(0,2)      MOVE TO POINTER IN LINE
+          LA    3,4(0,3)       MOVE TO TABLE POINTER
+          S     5,=F'1'        DECREASE LENGTH COUNTER
+          S     6,=F'1'        DECREASE WIDTH COUNTER
+          C     6,=F'1'        CHECK IF LINE IS FULL
+          BNE   PLOOP2         GO TO PLOOP2
+          XPRNT PLINE,85       PRINT LINE
+          B     PLOOP1         GO TO TOP OF LOOP
+PEND1     XPRNT PLINE,73       PRINT PLINE
+PEND      BR    11             END SUBROUTINE
+*************************************************
+*
+* REGISTER USAGE
+*   1  XDECI
+*   2  LOCATION OF STRING
+*   3  TABLE ADDRESS
+*   4  EOT ADDRESS
+*   5  LENGTH OF TABLE
+*   6  VARIABLE FOR TABLE
+*   7  DIVIDING ADDRESS
+*   8  WIDTH COUNTER
+*  11  RETURN ADDRESS
+*  13  PARMS
+*  14  ADDRESS FOR MAIN ROUTINE DONT USE
+*  15  BASE REGISTER
+*
+****************************************************
+EVENS     DS    0H          START OF EVENS  ROUTINE
+          XPRNT OHEAD,48    PRINT TABLE HEAD
+          LM    3,5,0(13)   LOAD PARAMS
+          L     5,0(0,5)    LENGTH OF TABLE
+EVEN1     L     8,=F'5'     COUNTER FOR TABLE WIDTH
+          LA    2,PLINE+1   POINTER TO PLINE
+          MVI   PLINE+1,C' '  CLEAR PRINT LINE
+          MVC   PLINE+2(71),PLINE+1
+          C     5,=F'0'     CHECK TO SEE IF VALE WAS PRINTED
+          BE    ESEND       GO TO EVENS SEND IF PRINTED
+EVEN2     C     5,=F'0'     CHECK IF TABLE WAS PRINTED
+          BE    ESEND1      GO TO ESEND IF PRINTED
+          L     7,0(0,3)    LOAD NUMBER
+          S     5,=F'1'     DECREASE TABLE LENGTH
+          M     6,=F'1'     SET REGISTER TO 64 BIT
+          D     6,=F'2'     CHECK IF NUMBER IS EVEN
+          C     6,=F'0'     CHECK IF NUMBER IS EVEN
+          BNE   SKIP        GO TO SKIP IF IT IS
+          L     6,0(0,3)    LOAD CURRENT NUMBER
+          XDECO 6,TEMPCAR   OUTPUT NUMBER
+          MVC   0(12,2),TEMPCAR  STORE DEC IN PRINT LINE
+          LA    2,12(0,2)   ADVANCE TO LINE POINTER
+          S     8,=F'1'     DECREASE LINE COUNTER
+SKIP      LA    3,4(0,3)    ADVANCE TO TABLE POINTER
+          C     8,=F'0'     CHECK IF PLINE IS FULL
+          BNE   EVEN2       GO TO EVEN2
+          XPRNT PLINE,73    PRINT PLINE
+          B     EVEN1       GO TO TOP OF LOOP
+ESEND1    XPRNT PLINE,61    PRINT LINE
+ESEND     BR    11          END OF SUBROUTINE
+*****************************************
+          LTORG
+TABLE     DS    72F'-16'
+EOT       DS    0H
+TABLELEG  DS    F'0'
+PHEAD     DC    CL44'1                            List of Numbers'
+OHEAD     DC    CL48'1                            List of Even Numbers'
+TEMPCAR   DS    CL12' '
+PARMS     DS    F'0'
+          DS    F'0'
+          DS    F'0'
+PLINE     DC    CL1'0'
+          DS    CL60' '
+BUFFER    DS    80C
+          DC    C'*'
+          END   MAIN
+/*
+//FT05F001  DD  DSN=KC02314.SUMMER19.CSCI360.HW4DATA,DISP=SHR
+//

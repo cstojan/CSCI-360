@@ -1,0 +1,39 @@
+//KC03D5B JOB ,'CORY STOJAN',MSGCLASS=H
+//STEP1 EXEC PGM=ASSIST
+//STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//SYSIN DD *
+********************************************
+* EXAMPLE PROGRAM 1C
+*
+* NAME:  CORY STOJAN
+*
+* Register Usage
+*
+*  5     NUM1
+*  6     NUM2
+*  7     NUM1
+*  8     NUM2
+* 15     Base register
+*
+********************************************
+MAIN     CSECT
+         USING MAIN,15
+         L     5,44(0,0)
+         L     6,48(0,0)
+         AR    5,6
+         ST    5,52(0,0)
+         L     7,44(0,0)
+         L     8,48(0,0)
+         SR    7,8
+         ST    7,56(0,0)
+         XDUMP 52(0,0),4
+         XDUMP 56(0,0),4
+         BR    14
+NUM1     DC    F'67'
+NUM2     DC    F'203'
+SUM      DS    F
+DIFF     DS    F
+         END   MAIN
+/*
+//

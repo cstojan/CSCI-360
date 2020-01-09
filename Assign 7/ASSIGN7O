@@ -1,0 +1,638 @@
+1                    J E S 2  J O B  L O G  --  S Y S T E M  S 0 W 1  --  N O D E  Z O S K C T R         
+0 
+ 13.03.10 JOB04148 ---- FRIDAY,    26 JUL 2019 ----
+ 13.03.10 JOB04148  IRR010I  USERID KC03D5B  IS ASSIGNED TO THIS JOB.
+ 13.03.10 JOB04148  ICH70001I KC03D5B  LAST ACCESS AT 13:03:00 ON FRIDAY, JULY 26, 2019
+ 13.03.10 JOB04148  $HASP373 KC03D5BA STARTED - INIT 2    - CLASS A        - SYS S0W1
+ 13.03.10 JOB04148  -                                         --TIMINGS (MINS.)--            ----PAGING COUNTS---
+ 13.03.10 JOB04148  -JOBNAME  STEPNAME PROCSTEP    RC   EXCP    TCB    SRB  CLOCK   SERV  PG   PAGE   SWAP    VIO SWAPS
+ 13.03.10 JOB04148  -KC03D5BA                      00    176 ******    .00     .0   1479   0      0      0      0     0
+ 13.03.10 JOB04148  -KC03D5BA ENDED.  NAME-Cory Stojan          TOTAL TCB CPU TIME=   .00  TOTAL ELAPSED TIME=    .0
+ 13.03.10 JOB04148  $HASP395 KC03D5BA ENDED
+0------ JES2 JOB STATISTICS ------
+-  26 JUL 2019 JOB EXECUTION DATE
+-          323 CARDS READ
+-          634 SYSOUT PRINT RECORDS
+-            4 SYSOUT PUNCH RECORDS
+-           45 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D5BA JOB ,'Cory Stojan',MSGCLASS=H                                JOB04148
+         2 //STEP1    EXEC  PGM=ASSIST                                                     
+         3 //STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                            
+         4 //SYSPRINT   DD  SYSOUT=*                                                       
+         5 //SYSIN      DD  *                                                              
+         6 //FT05F001  DD  DSN=KC02314.SUMMER19.CSCI360.HW7DATA,DISP=SHR                   
+ ICH70001I KC03D5B  LAST ACCESS AT 13:03:00 ON FRIDAY, JULY 26, 2019
+ IEF236I ALLOC. FOR KC03D5BA STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IGD103I SMS ALLOCATED TO DDNAME FT05F001
+ IEF142I KC03D5BA STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D5B.KC03D5BA.JOB04148.D0000102.?         SYSOUT        
+ IEF285I   KC03D5B.KC03D5BA.JOB04148.D0000101.?         SYSIN         
+ IGD104I KC02314.SUMMER19.CSCI360.HW7DATA             RETAINED,  DDNAME=FT05F001
+ IEF373I STEP/STEP1   /START 2019207.1303
+ IEF032I STEP/STEP1   /STOP  2019207.1303 
+         CPU:     0 HR  00 MIN  00.02 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   268K  EXT:        4K  SYS:    11404K
+         ATB- REAL:                     0K  SLOTS:                     0K
+              VIRT- ALLOC:       0M SHRD:       0M
+ IEF375I  JOB/KC03D5BA/START 2019207.1303
+ IEF033I  JOB/KC03D5BA/STOP  2019207.1303 
+         CPU:     0 HR  00 MIN  00.02 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ************************************************************                             
+                                       2 *  Program:     ASSIGN7                                                                  
+                                       3 *  Programmer:  Cory Stojan                                                              
+                                       4 ************************************************************                             
+ 000000                                5 ENTRY   DSECT       Format for Table                                                     
+ 000000                                6 DATE    DS    7C                                                                         
+ 000007                                7 NAME    DS    13C                                                                        
+ 000014                                8 SYMB    DS    3C                                                                         
+ 000017                                9 NUMB    DS    PL2   Length of 25                                                         
+                                      10 ***********************************                                                      
+                                      11 *  Register usage:                                                                       
+                                      12 *  15   MAIN                                                                             
+                                      13 *  14   Exit                                                                             
+                                      14 *  13   Save location                                                                    
+                                      15 *  10   Location to branch to                                                            
+                                      16 *  1    Params                                                                           
+                                      17 ***********************************                                                      
+ 000000                               18 MAIN     CSECT                                                                           
+ 000000                               19          USING MAIN,15                                                                   
+ 000000 50E0 FD04            00D04    20          ST    14,EXIT      Save Exit Location                                           
+ 000004 41D0 FCBC            00CBC    21          LA    13,SAVEM     Set the save area                                            
+ 000008 4110 F064            00064    22          LA    1,TABLE      Start Loading params into PARMS                              
+ 00000C 5010 FC20            00C20    23          ST    1,PARMS                                                                   
+ 000010 4110 FC1C            00C1C    24          LA    1,EOT                                                                     
+ 000014 5010 FC24            00C24    25          ST    1,PARMS+4                                                                 
+ 000018 4110 FC20            00C20    26          LA    1,PARMS      End Loading Params into PARMS                                
+ 00001C 58A0 F058            00058    27          L     10,=V(BUILD)                                                              
+ 000020 05EA                          28          BALR  14,10        Branch to Build                                              
+ 000022 4110 FC30            00C30    29          LA    1,HEAD                                                                    
+ 000026 5010 FC28            00C28    30          ST    1,PARMS+8                                                                 
+ 00002A 4110 FC20            00C20    31          LA    1,PARMS      End Loading Params into PARMS                                
+ 00002E 58A0 F05C            0005C    32          L     10,=V(PRINT)                                                              
+ 000032 05EA                          33          BALR  14,10        Branch to Print                                              
+ 000034 4110 FC20            00C20    34          LA    1,PARMS      End Loading Params into PARMS                                
+ 000038 58A0 F060            00060    35          L     10,=V(SORT)                                                               
+ 00003C 05EA                          36          BALR  14,10        Branch to Sort                                               
+ 00003E 4110 FC75            00C75    37          LA    1,HEADA                                                                   
+ 000042 5010 FC28            00C28    38          ST    1,PARMS+8                                                                 
+ 000046 4110 FC20            00C20    39          LA    1,PARMS      End Loading Params into PARMS                                
+ 00004A 58A0 F05C            0005C    40          L     10,=V(PRINT)                                                              
+ 00004E 05EA                          41          BALR  14,10        Branch to Print                                              
+                                      42 *                                                                                        
+ 000050 58E0 FD04            00D04    43          L     14,EXIT      Load exit location                                           
+ 000054 07FE                          44          BR    14           End program                                                  
+                                      45          LTORG              Literals are put here                                        
+ 000058 00000D08                      46                =V(BUILD)                                                                 
+ 00005C 00001290                      47                =V(PRINT)                                                                 
+ 000060 00001408                      48                =V(SORT)                                                                  
+ 000064 4040404040404040              49 TABLE    DC    3000C' '                                                                  
+ 000C1C                               50 EOT      DS    F                                                                         
+ 000C20 0000000000000000              51 PARMS    DC    4F'0'                                                                     
+ 000C30 F140404040404040              52 HEAD     DC    CL50'1                   Chronological List of Elements'                  
+1                                                                                                               PAGE    2         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000C62 4040404040404040              53          DC    CL19'           Page    '                                                 
+ 000C75 F140404040404040              54 HEADA    DC    CL50'1                        Elements Sorted by Name  '                  
+ 000CA7 4040404040404040              55          DC    CL19'           Page    '                                                 
+ 000CBC                               56 SAVEM    DS    18F'0'                                                                    
+ 000D04                               57 EXIT     DS    F                                                                         
+                                      58 ***********************************                                                      
+                                      59 *  Register usage:                                                                       
+                                      60 *   15    DONT USE                                                                       
+                                      61 *   14    Exit                                                                           
+                                      62 *   13    Save Area                                                                      
+                                      63 *    8    Location of EOT                                                                
+                                      64 *    7    Start of table                                                                 
+                                      65 *    4    Length of item in the buff                                                     
+                                      66 *    3    Location of end of item in buff                                                
+                                      67 *    1    Location of params                                                             
+                                      68 ***********************************                                                      
+ 000D08                               69 BUILD    CSECT                                                                           
+ 000D08 90EC D00C            0000C    70          STM   14,12,12(13)                                                              
+ 000D0C 18CF                          71          LR    12,15                                                                     
+ 000D08                               72          USING BUILD,10                                                                  
+ 000D0E 41E0 A53C            01244    73          LA    14,SAVEB                                                                  
+ 000D12 50D0 E004            00004    74          ST    13,4(,14)                                                                 
+ 000D16 50E0 D008            00008    75          ST    14,8(,13)                                                                 
+ 000D1A 18DE                          76          LR    13,14                                                                     
+                                      77 *                                                                                        
+ 000D1C 9878 1000            00000    78          LM    7,8,0(1)       Load params                                                
+ 000000                               79          USING ENTRY,7                                                                   
+ 000D20 E000 A0E8 0050 00DF0          80 READ     XREAD BUFF,80        Read in buffer                                             
+ 000D26 4740 A0BC            00DC4    81          BL    REND                                                                      
+ 000D2A 4110 A0E8            00DF0    82          LA    1,BUFF                                                                    
+ 000D2E DD4F 1000 A139 00000 00E41    83 SCAN     TRT   0(80,1),SCANTAB Search for the location of the next                       
+ 000D34 4780 A018            00D20    84          BZ    READ            If the search fails, goto the top of the loop             
+ 000D38 1831                          85          LR    3,1             Set location of element                                   
+ 000D3A DD4F 1000 A239 00000 00F41    86          TRT   0(80,1),SPACES  Search for the next space                                 
+ 000D40 1841                          87          LR    4,1             Set end location of element to R4                         
+ 000D42 1B43                          88          SR    4,3             Get length of element                                     
+ 000D44 0640                          89          BCTR  4,0             Subtract one from length                                  
+ 000D46 4440 A0D0            00DD8    90          EX    4,EDATE         Set date                                                  
+ 000D4A DC06 7000 A339 00000 01041    91          TR    DATE(7),LOWTAB  Set to lower                                              
+ 000D50 DD4F 1000 A139 00000 00E41    92          TRT   0(80,1),SCANTAB Search for the location of the next                       
+ 000D56 4780 A018            00D20    93          BZ    READ            If the search fails, goto the top of the loop             
+ 000D5A 1831                          94          LR    3,1             Set location of element                                   
+ 000D5C DD4F 1000 A239 00000 00F41    95          TRT   0(80,1),SPACES  Search for the next space                                 
+ 000D62 1841                          96          LR    4,1             Set end location of element to R4                         
+ 000D64 1B43                          97          SR    4,3             Get length of element                                     
+ 000D66 0640                          98          BCTR  4,0             Subtract one from length                                  
+ 000D68 4440 A0D6            00DDE    99          EX    4,ENAME         Set name                                                  
+ 000D6C DC0C 7007 A339 00007 01041   100          TR    NAME(13),LOWTAB Set to lower                                              
+ 000D72 DC00 7007 A439 00007 01141   101          TR    NAME(1),HIGHTAB Set to upper                                              
+ 000D78 DD4F 1000 A139 00000 00E41   102          TRT   0(80,1),SCANTAB Search for the location of the next                       
+ 000D7E 4780 A018            00D20   103          BZ    READ            If the search fails, goto the top of the loop             
+ 000D82 1831                         104          LR    3,1             Set location of element                                   
+ 000D84 DD4F 1000 A239 00000 00F41   105          TRT   0(80,1),SPACES  Search for the next space                                 
+ 000D8A 1841                         106          LR    4,1             Set end location of element to R4                         
+ 000D8C 1B43                         107          SR    4,3             Get length of element                                     
+ 000D8E 0640                         108          BCTR  4,0             Subtract one from length                                  
+ 000D90 4440 A0DC            00DE4   109          EX    4,ESYMB         Set symbol                                                
+1                                                                                                               PAGE    3         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000D94 DC02 7014 A339 00014 01041   110          TR    SYMB(3),LOWTAB  Set to lower                                              
+ 000D9A DC00 7014 A439 00014 01141   111          TR    SYMB(1),HIGHTAB Set to upper                                              
+ 000DA0 DD4F 1000 A139 00000 00E41   112          TRT   0(80,1),SCANTAB Search for the location of the next                       
+ 000DA6 4780 A018            00D20   113          BZ    READ            If the search fails, goto the top of the loop             
+ 000DAA 1831                         114          LR    3,1             Set location of element                                   
+ 000DAC DD4F 1000 A239 00000 00F41   115          TRT   0(80,1),SPACES  Search for the next space                                 
+ 000DB2 1841                         116          LR    4,1             Set end location of element to R4                         
+ 000DB4 1B43                         117          SR    4,3             Get length of element                                     
+ 000DB6 0640                         118          BCTR  4,0             Subtract one from length                                  
+ 000DB8 4440 A0E2            00DEA   119          EX    4,ENUMB         Set number                                                
+ 000DBC 4170 7019            00019   120          LA    7,25(0,7)       advance table pointer                                     
+ 000DC0 47F0 A018            00D20   121          B     READ            Back to top of loop                                       
+ 000DC4                              122 REND     DS    0H                                                                        
+ 000DC4 5070 8000            00000   123          ST    7,0(0,8) Store EOT                                                        
+                                     124 *                                                                                        
+ 000DC8 58D0 D004            00004   125          L     13,4(,13)                                                                 
+ 000DCC 98EC D00C            0000C   126          LM    14,12,12(13)                                                              
+ 000DD0 07FE                         127          BR    14              End subroutine                                            
+                                     128          LTORG                 Literals are put here                                     
+                                     129 *                                                                                        
+ 000DD8 D200 7000 3000 00000 00000   130 EDATE    MVC   DATE(0),0(3)                                                              
+ 000DDE D200 7007 3000 00007 00000   131 ENAME    MVC   NAME(0),0(3)                                                              
+ 000DE4 D200 7014 3000 00014 00000   132 ESYMB    MVC   SYMB(0),0(3)                                                              
+ 000DEA F210 7017 3000 00017 00000   133 ENUMB    PACK  NUMB(2),0(0,3)                                                            
+                                     134 *                                                                                        
+ 000DF0 4040404040404040             135 BUFF     DC    80C' '                                                                    
+ 000E40 5C                           136          DC    C'*'                                                                      
+ 000E41 0000000000000000             137 SCANTAB  DC    256X'00'                                                                  
+ 000F02                              138          ORG   SCANTAB+C'A'                                                              
+ 000F02 0101010101010101             139          DC    9X'01'                                                                    
+ 000F41                              140          ORG                                                                             
+ 000F12                              141          ORG   SCANTAB+C'J'                                                              
+ 000F12 0101010101010101             142          DC    9X'01'                                                                    
+ 000F41                              143          ORG                                                                             
+ 000F23                              144          ORG   SCANTAB+C'S'                                                              
+ 000F23 0101010101010101             145          DC    8X'01'                                                                    
+ 000F41                              146          ORG                                                                             
+ 000EC2                              147          ORG   SCANTAB+C'a'                                                              
+ 000EC2 0101010101010101             148          DC    9X'01'                                                                    
+ 000F41                              149          ORG                                                                             
+ 000ED2                              150          ORG   SCANTAB+C'j'                                                              
+ 000ED2 0101010101010101             151          DC    9X'01'                                                                    
+ 000F41                              152          ORG                                                                             
+ 000EE3                              153          ORG   SCANTAB+C's'                                                              
+ 000EE3 0101010101010101             154          DC    9X'01'                                                                    
+ 000F41                              155          ORG                                                                             
+ 000F31                              156          ORG   SCANTAB+C'0'                                                              
+ 000F31 0101010101010101             157          DC    10X'01'                                                                   
+ 000F41                              158          ORG                                                                             
+ 000F41 0000000000000000             159 SPACES   DC    256X'00'                                                                  
+ 000F81                              160          ORG   SPACES+X'40'                                                              
+ 000F81 01                           161          DC    X'01'                                                                     
+ 001041                              162          ORG                                                                             
+ 001041 4040404040404040             163 LOWTAB   DC    256C' '                                                                   
+ 0010C2                              164          ORG   LOWTAB+C'a'                                                               
+ 0010C2 8182838485868788             165          DC    CL9'abcdefghi'                                                            
+ 001141                              166          ORG                                                                             
+1                                                                                                               PAGE    4         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 0010D2                              167          ORG   LOWTAB+C'j'                                                               
+ 0010D2 9192939495969798             168          DC    CL9'jklmnopqr'                                                            
+ 001141                              169          ORG                                                                             
+ 0010E3                              170          ORG   LOWTAB+C's'                                                               
+ 0010E3 A2A3A4A5A6A7A8A9             171          DC    CL8'stuvwxyz'                                                             
+ 001141                              172          ORG                                                                             
+ 001102                              173          ORG   LOWTAB+C'A'                                                               
+ 001102 8182838485868788             174          DC    CL9'abcdefghi'                                                            
+ 001141                              175          ORG                                                                             
+ 001112                              176          ORG   LOWTAB+C'J'                                                               
+ 001112 9192939495969798             177          DC    CL9'jklmnopqr'                                                            
+ 001141                              178          ORG                                                                             
+ 001123                              179          ORG   LOWTAB+C'S'                                                               
+ 001123 A2A3A4A5A6A7A8A9             180          DC    CL8'stuvwxyz'                                                             
+ 001141                              181          ORG                                                                             
+ 001131                              182          ORG   LOWTAB+C'0'                                                               
+ 001131 F0F1F2F3F4F5F6F7             183          DC    CL10'0123456789'                                                          
+ 001141                              184          ORG                                                                             
+ 001141 4040404040404040             185 HIGHTAB  DC    256C' '                                                                   
+ 0011C2                              186          ORG   HIGHTAB+C'a'                                                              
+ 0011C2 C1C2C3C4C5C6C7C8             187          DC    CL9'ABCDEFGHI'                                                            
+ 001241                              188          ORG                                                                             
+ 0011D2                              189          ORG   HIGHTAB+C'j'                                                              
+ 0011D2 D1D2D3D4D5D6D7D8             190          DC    CL9'JKLMNOPQR'                                                            
+ 001241                              191          ORG                                                                             
+ 0011E3                              192          ORG   HIGHTAB+C's'                                                              
+ 0011E3 E2E3E4E5E6E7E8E9             193          DC    CL9'STUVWXYZ'                                                             
+ 001241                              194          ORG                                                                             
+ 001202                              195          ORG   HIGHTAB+C'A'                                                              
+ 001202 C1C2C3C4C5C6C7C8             196          DC    CL9'ABCDEFGHI'                                                            
+ 001241                              197          ORG                                                                             
+ 001212                              198          ORG   HIGHTAB+C'J'                                                              
+ 001212 D1D2D3D4D5D6D7D8             199          DC    CL9'JKLMNOPQR'                                                            
+ 001241                              200          ORG                                                                             
+ 001223                              201          ORG   HIGHTAB+C'S'                                                              
+ 001223 E2E3E4E5E6E7E8E9             202          DC    CL9'STUVWXYZ'                                                             
+ 001241                              203          ORG                                                                             
+ 001231                              204          ORG   HIGHTAB+C'0'                                                              
+ 001231 F0F1F2F3F4F5F6F7             205          DC    CL10'0123456789'                                                          
+ 001241                              206          ORG                                                                             
+ 001244                              207 SAVEB    DS    18F'0'                                                                    
+                                     208 ***********************************                                                      
+                                     209 *  Register usage:                                                                       
+                                     210 *   15    DONT USE                                                                       
+                                     211 *   14    Exit                                                                           
+                                     212 *   13    Save Area                                                                      
+                                     213 *   9     Location of page headder                                                       
+                                     214 *   8     Location of EOT                                                                
+                                     215 *   7     Table pointer                                                                  
+                                     216 *   6     counter                                                                        
+                                     217 ***********************************                                                      
+ 001290                              218 PRINT    CSECT                                                                           
+ 001290 90EC D00C            0000C   219          STM   14,12,12(13)                                                              
+ 001294 18CF                         220          LR    12,15                                                                     
+ 001290                              221          USING PRINT,10      Use R10 as base register                                    
+ 001296 9879 1000            00000   222          LM    7,9,0(1)      Load params into R3,R4, and R5                              
+ 00129A 41E0 A12C            013BC   223          LA    14,SAVEC                                                                  
+1                                                                                                               PAGE    5         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 00129E 50D0 E004            00004   224          ST    13,4(,14)                                                                 
+ 0012A2 50E0 D008            00008   225          ST    14,8(,13)                                                                 
+ 0012A6 18DE                         226          LR    13,14                                                                     
+                                     227 *                                                                                        
+ 000000                              228          USING ENTRY,7                                                                   
+ 0012A8 5860 A090            01320   229          L     6,=F'0'                                                                   
+ 0012AC 5970 8000            00000   230 NLOOP    C     7,0(0,8)                                                                  
+ 0012B0 4780 A082            01312   231          BE    PEND                                                                      
+ 0012B4 5960 A090            01320   232          C     6,=F'0'        Check element counter                                      
+ 0012B8 4780 A05C            012EC   233          BE    PHEADDER       Print headder if true                                      
+ 0012BC D20C A0E9 7007 01379 00007   234 COUNT    MVC   PNAME(13),NAME Set Name                                                   
+ 0012C2 D201 A101 7014 01391 00014   235          MVC   PSYMB(2),SYMB  Set Symbol                                                 
+ 0012C8 D206 A122 7000 013B2 00000   236          MVC   PDATE(7),DATE  Set date                                                   
+ 0012CE D203 A111 A094 013A1 01324   237          MVC   PNUMB(4),=X'40202020' Format for atomic number                            
+ 0012D4 DE03 A111 7017 013A1 00017   238          ED    PNUMB(4),NUMB  Set atomic number                                          
+ 0012DA E020 A0E8 0041 01378         239          XPRNT PLINE,65       Print element                                              
+ 0012E0 4170 7019            00019   240          LA    7,25(0,7)      Advance pointer                                            
+ 0012E4 5B60 A098            01328   241          S     6,=F'1'        Subtract one from element counter                          
+ 0012E8 47F0 A01C            012AC   242          B     NLOOP          Branch to top of NLOOP                                     
+ 0012EC 5860 A09C            0132C   243 PHEADDER L     6,=F'50'       Set counter to 50                                          
+ 0012F0 D203 9041 A094 00041 01324   244          MVC   65(4,9),=X'40202020' fromat pge number                                    
+ 0012F6 DE03 9041 A0E6 00041 01376   245          ED    65(4,9),PCOUNT Set page number                                            
+ 0012FC E020 9000 0045 00000         246          XPRNT 0(,9),69       Print page headder                                         
+ 001302 E020 A0A1 0045 01331         247          XPRNT PHEAD,69       Print table headder                                        
+ 001308 FA10 A0E6 A0A0 01376 01330   248          AP    PCOUNT,=PL1'1' Add one to page count                                      
+ 00130E 47F0 A02C            012BC   249          B     COUNT          Print next element                                         
+                                     250 *                                                                                        
+ 001312 58D0 D004            00004   251 PEND     L     13,4(,13)                                                                 
+ 001316 98EC D00C            0000C   252          LM    14,12,12(13)                                                              
+ 00131A 07FE                         253          BR    14             End of subroutine                                          
+                                     254          LTORG                Literals are put here                                      
+ 001320 00000000                     255                =F'0'                                                                     
+ 001324 40202020                     256                =X'40202020'                                                              
+ 001328 00000001                     257                =F'1'                                                                     
+ 00132C 00000032                     258                =F'50'                                                                    
+ 001330 1C                           259                =PL1'1'                                                                   
+ 001331 60D5819485409686             260 PHEAD    DC    CL37'-Name of Element   Chemical Symbol   '                               
+ 001356 C1A39694898340D5             261          DC    CL32'Atomic Number    Date Discovered'                                    
+ 001376 001C                         262 PCOUNT   DC    PL2'1'                                                                    
+ 001378 40                           263 PLINE    DC    C' '                                                                      
+ 001379 4040404040404040             264 PNAME    DC    13C' '                                                                    
+ 001386 4040404040404040             265          DC    11C' '                                                                    
+ 001391 4040                         266 PSYMB    DC    2C' '                                                                     
+ 001393 4040404040404040             267          DC    14C' '                                                                    
+ 0013A1 40404040                     268 PNUMB    DC    4C' '                                                                     
+ 0013A5 4040404040404040             269          DC    13C' '                                                                    
+ 0013B2 40404040404040               270 PDATE    DC    7C' '                                                                     
+ 0013BC                              271 SAVEC    DS    18F'0'                                                                    
+                                     272 ***********************************                                                      
+                                     273 *  Register usage:                                                                       
+                                     274 *   15    DONT USE                                                                       
+                                     275 *   14    Exit                                                                           
+                                     276 *   13    Save Area                                                                      
+                                     277 *    8    Location of EOT                                                                
+                                     278 *    7    Location of table                                                              
+                                     279 *    4    lower table element                                                            
+                                     280 *    3    upper table element                                                            
+1                                                                                                               PAGE    6         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     281 *    2    sort start location                                                            
+                                     282 ***********************************                                                      
+ 001408                              283 SORT   CSECT                                                                             
+ 001408 90EC D00C            0000C   284          STM   14,12,12(13)                                                              
+ 00140C 18CF                         285          LR    12,15                                                                     
+ 001408                              286          USING SORT,10                                                                   
+ 00140E 41E0 A09C            014A4   287          LA    14,SAVED                                                                  
+ 001412 50D0 E004            00004   288          ST    13,4(,14)                                                                 
+ 001416 50E0 D008            00008   289          ST    14,8(,13)                                                                 
+ 00141A 18DE                         290          LR    13,14                                                                     
+ 00141C 9878 1000            00000   291          LM    7,8,0(1)       Load params into R3,R4, and R5                             
+                                     292 *                                                                                        
+ 001420 1827                         293          LR    2,7                                                                       
+ 001422 5880 8000            00000   294          L     8,0(,8)                                                                   
+ 001426 5A80 A078            01480   295          A     8,=F'-50'                                                                 
+ 00142A                              296 FOR      DS    0H             Start of for loop                                          
+ 00142A 1928                         297          CR    2,8                                                                       
+ 00142C 4780 A06A            01472   298          BE    SEND                                                                      
+ 001430 4720 A06A            01472   299          BH    SEND                                                                      
+ 001434 4130 2032            00032   300          LA    3,50(0,2)                                                                 
+ 001438 4140 204B            0004B   301          LA    4,75(0,2)                                                                 
+ 00143C                              302 WHILE    DS    0H             Start of while loop                                        
+ 00143C 5A30 A07C            01484   303          A     3,=F'-25'      Decriment pointer                                          
+ 001440 5A40 A07C            01484   304          A     4,=F'-25'      Decriment pointer                                          
+ 001444 D50C 3007 4007 00007 00007   305          CLC   7(13,3),7(4)   Comparison                                                 
+ 00144A 4720 A04E            01456   306          BH    SWAP           Branch to swap on high                                     
+ 00144E 4120 2019            00019   307          LA    2,25(0,2)      Dvance pointer                                             
+ 001452 47F0 A022            0142A   308          B     FOR            Branch to top of for                                       
+ 001456                              309 SWAP     DS    0H             Swap the two elements                                      
+ 001456 D218 A080 3000 01488 00000   310          MVC   TEMP(25),0(3)  Store R3 in temp                                           
+ 00145C D218 3000 4000 00000 00000   311          MVC   0(25,3),0(4)   Store R4 in R3                                             
+ 001462 D218 4000 A080 00000 01488   312          MVC   0(25,4),TEMP   Store temp in R4                                           
+ 001468 1937                         313          CR    3,7            check if at the begining of table                          
+ 00146A 4780 A022            0142A   314          BE    FOR            If true branch to for                                      
+ 00146E 47F0 A034            0143C   315          B     WHILE          Top of while                                               
+                                     316 *                                                                                        
+ 001472 58D0 D004            00004   317 SEND     L     13,4(,13)                                                                 
+ 001476 98EC D00C            0000C   318          LM    14,12,12(13)                                                              
+ 00147A 07FE                         319          BR    14             End of subroutine                                          
+                                     320          LTORG                Literals are put here                                      
+ 001480 FFFFFFCE                     321                =F'-50'                                                                   
+ 001484 FFFFFFE7                     322                =F'-25'                                                                   
+ 001488                              323 TEMP     DS    25C                                                                       
+ 0014A4                              324 SAVED    DS    18F'0'                                                                    
+                                     325 ***********************************                                                      
+                                     326          END   MAIN                                                                      
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:   16128 HIGH:    1500 LEAVING:  475940 FREE BYTES. AVERAGE:       53 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,   327000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+1                   Chronological List of Elements           Page   1                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Copper                  Cu                29             ancient                                                                 
+ Sulfur                  S                 16             ancient                                                                 
+ Silver                  Ag                47             ancient                                                                 
+ Tin                     Sn                50             ancient                                                                 
+ Antimony                Sb                51             ancient                                                                 
+ Gold                    Au                79             ancient                                                                 
+ Mercury                 Hg                80             ancient                                                                 
+ Lead                    Pb                82             ancient                                                                 
+ Bismuth                 Bi                83             ca 1400                                                                 
+ Phosphorus              P                 15             1669                                                                    
+ Carbon                  C                  6             ca 1694                                                                 
+ Iron                    Fe                26             1735                                                                    
+ Platinum                Pt                78             1735                                                                    
+ Nickel                  Ni                28             1751                                                                    
+ Cobalt                  Co                27             1751                                                                    
+ Magnesium               Mg                12             1755                                                                    
+ Nitrogen                N                  7             1772                                                                    
+ Oxygen                  O                  8             1774                                                                    
+ Manganese               Mn                25             1774                                                                    
+ Chlorine                Cl                17             1774                                                                    
+ Chromium                Cr                24             1774                                                                    
+ Hydrogen                H                  1             1776                                                                    
+ Molybdenum              Mo                42             1781                                                                    
+ Tellurium               Te                52             1782                                                                    
+ Tungsten                W                 74             1783                                                                    
+ Zirconium               Zr                40             1789                                                                    
+ Uranium                 U                 92             1789                                                                    
+ Strontium               Sr                38             1790                                                                    
+ Scandium                Sc                21             1791                                                                    
+ Yttrium                 Y                 39             1794                                                                    
+ Beryllium               Be                 4             1797                                                                    
+ Vanadium                V                 23             1797                                                                    
+ Niobium                 Nb                41             1801                                                                    
+ Tantalum                Ta                73             1802                                                                    
+ Rhodium                 Rh                45             1803                                                                    
+ Palladium               Pd                46             1803                                                                    
+ Cerium                  Ce                58             1803                                                                    
+ Osmium                  Os                76             1803                                                                    
+ Iridium                 Ir                77             1803                                                                    
+ Sodium                  Na                11             1807                                                                    
+ Potassium               K                 19             1807                                                                    
+ Boron                   B                  5             1808                                                                    
+ Barium                  Ba                56             1808                                                                    
+ Iodine                  I                 53             1811                                                                    
+ Lithium                 Li                 3             1817                                                                    
+ Cadmium                 Cd                48             1817                                                                    
+ Arsenic                 As                33             1817                                                                    
+ Silicon                 Si                14             1824                                                                    
+ Aluminum                Al                13             1825                                                                    
+ Bromine                 Br                25             1825                                                                    
+1                   Chronological List of Elements           Page   2                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Selenium                Se                34             1826                                                                    
+ Thorium                 Th                90             1829                                                                    
+ Titanium                Ti                22             1830                                                                    
+ Lanthanum               La                57             1839                                                                    
+ Erbium                  Er                68             1842                                                                    
+ Terbium                 Tb                65             1843                                                                    
+ Ruthenium               Ru                44             1844                                                                    
+ Cesium                  Cs                55             1860                                                                    
+ Rubidium                Rb                37             1861                                                                    
+ Thallium                Tl                81             1861                                                                    
+ Indium                  In                49             1863                                                                    
+ Holmium                 Ho                67             1867                                                                    
+ Zinc                    Zn                30             1875                                                                    
+ Ytterbium               Yb                70             1878                                                                    
+ Calcium                 Ca                20             1879                                                                    
+ Samarium                Sm                62             1879                                                                    
+ Thulium                 Tm                69             1879                                                                    
+ Gadolinium              Gd                64             1880                                                                    
+ Praseodymium            Pr                59             1885                                                                    
+ Neodymium               Nd                60             1885                                                                    
+ Fluorine                F                  9             1886                                                                    
+ Germanium               Ge                32             1886                                                                    
+ Gallium                 Ga                31             1886                                                                    
+ Dysprosium              Dy                66             1886                                                                    
+ Argon                   Ar                18             1894                                                                    
+ Helium                  He                 2             1895                                                                    
+ Neon                    Ne                10             1898                                                                    
+ Krypton                 Kr                36             1898                                                                    
+ Xenon                   Xe                54             1898                                                                    
+ Polonium                Po                84             1898                                                                    
+ Radium                  Ra                88             1898                                                                    
+ Actinium                Ac                89             1899                                                                    
+ Radon                   Rn                86             1900                                                                    
+ Europium                Eu                63             1901                                                                    
+ Lutetium                Lu                71             1907                                                                    
+ Protactinium            Pa                91             1913                                                                    
+ Hafnium                 Hf                72             1923                                                                    
+ Rhenium                 Re                75             1925                                                                    
+ Technetium              Tc                43             1937                                                                    
+ Francium                Fr                87             1939                                                                    
+ Astatine                At                85             1940                                                                    
+ Neptunium               Np                93             1940                                                                    
+ Plutonium               Pu                94             1940                                                                    
+ Americium               Am                95             1944                                                                    
+ Curium                  Cm                96             1944                                                                    
+ Promethium              Pm                61             1945                                                                    
+ Berkelium               Bk                97             1949                                                                    
+ Californium             Cf                98             1950                                                                    
+ Einsteinium             Es                99             1952                                                                    
+ Fermium                 Fm               100             1952                                                                    
+1                   Chronological List of Elements           Page   3                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Mendelevium             Md               101             1955                                                                    
+ Nobelium                No               102             1958                                                                    
+ Lawrencium              Lr               103             1961                                                                    
+ Rutherfordium           Rf               104             1964                                                                    
+ Dubnium                 Db               105             1967                                                                    
+ Seaborgium              Sg               106             1974                                                                    
+ Bohrium                 Bh               107             1981                                                                    
+ Meitnerium              Mt               109             1982                                                                    
+ Hassium                 Hs               108             1984                                                                    
+ Darmstadtium            Ds               110             1994                                                                    
+ Roentgenium             Rg               111             1994                                                                    
+ Ununbium                Uu               112             1996                                                                    
+ Ununtrium               Uu               113             1998                                                                    
+ Ununoctium              Uu               118             1999                                                                    
+ Ununquadium             Uu               114             1999                                                                    
+ Ununhexium              Uu               116             2000                                                                    
+ Ununpentium             Uu               115             2004                                                                    
+ Ununseptium             Uu               117             unknown                                                                 
+1                        Elements Sorted by Name             Page   4                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Actinium                Ac                89             1899                                                                    
+ Aluminum                Al                13             1825                                                                    
+ Americium               Am                95             1944                                                                    
+ Antimony                Sb                51             ancient                                                                 
+ Argon                   Ar                18             1894                                                                    
+ Arsenic                 As                33             1817                                                                    
+ Astatine                At                85             1940                                                                    
+ Barium                  Ba                56             1808                                                                    
+ Berkelium               Bk                97             1949                                                                    
+ Beryllium               Be                 4             1797                                                                    
+ Bismuth                 Bi                83             ca 1400                                                                 
+ Bohrium                 Bh               107             1981                                                                    
+ Boron                   B                  5             1808                                                                    
+ Bromine                 Br                25             1825                                                                    
+ Cadmium                 Cd                48             1817                                                                    
+ Calcium                 Ca                20             1879                                                                    
+ Californium             Cf                98             1950                                                                    
+ Carbon                  C                  6             ca 1694                                                                 
+ Cerium                  Ce                58             1803                                                                    
+ Cesium                  Cs                55             1860                                                                    
+ Chlorine                Cl                17             1774                                                                    
+ Chromium                Cr                24             1774                                                                    
+ Cobalt                  Co                27             1751                                                                    
+ Copper                  Cu                29             ancient                                                                 
+ Curium                  Cm                96             1944                                                                    
+ Darmstadtium            Ds               110             1994                                                                    
+ Dubnium                 Db               105             1967                                                                    
+ Dysprosium              Dy                66             1886                                                                    
+ Einsteinium             Es                99             1952                                                                    
+ Erbium                  Er                68             1842                                                                    
+ Europium                Eu                63             1901                                                                    
+ Fermium                 Fm               100             1952                                                                    
+ Fluorine                F                  9             1886                                                                    
+ Francium                Fr                87             1939                                                                    
+ Gadolinium              Gd                64             1880                                                                    
+ Gallium                 Ga                31             1886                                                                    
+ Germanium               Ge                32             1886                                                                    
+ Gold                    Au                79             ancient                                                                 
+ Hafnium                 Hf                72             1923                                                                    
+ Hassium                 Hs               108             1984                                                                    
+ Helium                  He                 2             1895                                                                    
+ Holmium                 Ho                67             1867                                                                    
+ Hydrogen                H                  1             1776                                                                    
+ Indium                  In                49             1863                                                                    
+ Iodine                  I                 53             1811                                                                    
+ Iridium                 Ir                77             1803                                                                    
+ Iron                    Fe                26             1735                                                                    
+ Krypton                 Kr                36             1898                                                                    
+ Lanthanum               La                57             1839                                                                    
+ Lawrencium              Lr               103             1961                                                                    
+1                        Elements Sorted by Name             Page   5                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Lead                    Pb                82             ancient                                                                 
+ Lithium                 Li                 3             1817                                                                    
+ Lutetium                Lu                71             1907                                                                    
+ Magnesium               Mg                12             1755                                                                    
+ Manganese               Mn                25             1774                                                                    
+ Meitnerium              Mt               109             1982                                                                    
+ Mendelevium             Md               101             1955                                                                    
+ Mercury                 Hg                80             ancient                                                                 
+ Molybdenum              Mo                42             1781                                                                    
+ Neodymium               Nd                60             1885                                                                    
+ Neon                    Ne                10             1898                                                                    
+ Neptunium               Np                93             1940                                                                    
+ Nickel                  Ni                28             1751                                                                    
+ Niobium                 Nb                41             1801                                                                    
+ Nitrogen                N                  7             1772                                                                    
+ Nobelium                No               102             1958                                                                    
+ Osmium                  Os                76             1803                                                                    
+ Oxygen                  O                  8             1774                                                                    
+ Palladium               Pd                46             1803                                                                    
+ Phosphorus              P                 15             1669                                                                    
+ Platinum                Pt                78             1735                                                                    
+ Plutonium               Pu                94             1940                                                                    
+ Polonium                Po                84             1898                                                                    
+ Potassium               K                 19             1807                                                                    
+ Praseodymium            Pr                59             1885                                                                    
+ Promethium              Pm                61             1945                                                                    
+ Protactinium            Pa                91             1913                                                                    
+ Radium                  Ra                88             1898                                                                    
+ Radon                   Rn                86             1900                                                                    
+ Rhenium                 Re                75             1925                                                                    
+ Rhodium                 Rh                45             1803                                                                    
+ Roentgenium             Rg               111             1994                                                                    
+ Rubidium                Rb                37             1861                                                                    
+ Ruthenium               Ru                44             1844                                                                    
+ Rutherfordium           Rf               104             1964                                                                    
+ Samarium                Sm                62             1879                                                                    
+ Scandium                Sc                21             1791                                                                    
+ Seaborgium              Sg               106             1974                                                                    
+ Selenium                Se                34             1826                                                                    
+ Silicon                 Si                14             1824                                                                    
+ Silver                  Ag                47             ancient                                                                 
+ Sodium                  Na                11             1807                                                                    
+ Strontium               Sr                38             1790                                                                    
+ Sulfur                  S                 16             ancient                                                                 
+ Tantalum                Ta                73             1802                                                                    
+ Technetium              Tc                43             1937                                                                    
+ Tellurium               Te                52             1782                                                                    
+ Terbium                 Tb                65             1843                                                                    
+ Thallium                Tl                81             1861                                                                    
+ Thorium                 Th                90             1829                                                                    
+1                        Elements Sorted by Name             Page   6                                                             
+-Name of Element   Chemical Symbol   Atomic Number    Date Discovered                                                             
+ Thulium                 Tm                69             1879                                                                    
+ Tin                     Sn                50             ancient                                                                 
+ Titanium                Ti                22             1830                                                                    
+ Tungsten                W                 74             1783                                                                    
+ Ununbium                Uu               112             1996                                                                    
+ Ununhexium              Uu               116             2000                                                                    
+ Ununoctium              Uu               118             1999                                                                    
+ Ununpentium             Uu               115             2004                                                                    
+ Ununquadium             Uu               114             1999                                                                    
+ Ununseptium             Uu               117             unknown                                                                 
+ Ununtrium               Uu               113             1998                                                                    
+ Uranium                 U                 92             1789                                                                    
+ Vanadium                V                 23             1797                                                                    
+ Xenon                   Xe                54             1898                                                                    
+ Ytterbium               Yb                70             1878                                                                    
+ Yttrium                 Y                 39             1794                                                                    
+ Zinc                    Zn                30             1875                                                                    
+ Zirconium               Zr                40             1789                                                                    
+0*** EXECUTION TIME =    0.013 SECS.     43042 INSTRUCTIONS EXECUTED -  3310923 INSTRUCTIONS/SEC ***                              
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                

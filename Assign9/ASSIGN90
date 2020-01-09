@@ -1,0 +1,646 @@
+1                   J E S 2  J O B  L O G  --  S Y S T E M  2 9 6 4  --  N O D E  S V S C J E S 2        
+0 
+ 00.40.27 JOB00161 ---- MONDAY,    05 AUG 2019 ----
+ 00.40.27 JOB00161  IRR010I  USERID KC03D5B  IS ASSIGNED TO THIS JOB.
+ 00.40.27 JOB00161  ICH70001I KC03D5B  LAST ACCESS AT 00:40:17 ON MONDAY, AUGUST 5, 2019
+ 00.40.27 JOB00161  $HASP373 KC03D5BA STARTED - INIT 2    - CLASS A        - SYS 2964
+ 00.40.28 JOB00161  -                                      -----TIMINGS (MINS.)------                          -----PAGING COUNTS-
+ 00.40.28 JOB00161  -STEPNAME PROCSTEP    RC   EXCP   CONN       TCB       SRB  CLOCK          SERV  WORKLOAD  PAGE  SWAP   VIO SW
+ 00.40.28 JOB00161  -STEP1                00    375     15       .00       .00     .0            24  BATCH        0     0     0   
+ 00.40.28 JOB00161  -KC03D5BA ENDED.  NAME-CORY STOJAN          TOTAL TCB CPU TIME=      .00 TOTAL ELAPSED TIME=    .0
+ 00.40.28 JOB00161  $HASP395 KC03D5BA ENDED - RC=0000
+0------ JES2 JOB STATISTICS ------
+-  05 AUG 2019 JOB EXECUTION DATE
+-           72 CARDS READ
+-          650 SYSOUT PRINT RECORDS
+-            0 SYSOUT PUNCH RECORDS
+-           54 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D5BA JOB ,'CORY STOJAN',MSGCLASS=H                                JOB00161
+         2 //STEP1    EXEC  PGM=ASSIST,PARM='MACRO=F'                                      
+         3 //STEPLIB    DD  DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                            
+         4 //SYSPRINT   DD  SYSOUT=*                                                       
+         5 //SYSIN      DD  *                                                              
+         6 //          DD DSN=KC02314.SUMMER19.CSCI360.HW9.DRIVER,DISP=SHR                 
+         7 //FT05F001  DD DUMMY                                                            
+         8 //FT06F001  DD SYSOUT=*                                                         
+ ICH70001I KC03D5B  LAST ACCESS AT 00:40:17 ON MONDAY, AUGUST 5, 2019
+ IEFA111I KC03D5BA IS USING THE FOLLOWING JOB RELATED SETTINGS:
+          SWA=ABOVE,TIOT SIZE=32K,DSENQSHR=DISALLOW,GDGBIAS=JOB
+ IEF236I ALLOC. FOR KC03D5BA STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IGD103I SMS ALLOCATED TO DDNAME
+ IEF237I DMY  ALLOCATED TO FT05F001
+ IEF237I JES2 ALLOCATED TO FT06F001
+ IEF142I KC03D5BA STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D5B.KC03D5BA.JOB00161.D0000102.?         SYSOUT        
+ IEF285I   KC03D5B.KC03D5BA.JOB00161.D0000101.?         SYSIN         
+ IGD104I KC02314.SUMMER19.CSCI360.HW9.DRIVER          RETAINED,  DDNAME=        
+ IEF285I   KC03D5B.KC03D5BA.JOB00161.D0000103.?         SYSOUT        
+ IEF373I STEP/STEP1   /START 2019217.0040
+ IEF032I STEP/STEP1   /STOP  2019217.0040 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   248K  EXT:        0K  SYS:    11264K
+         ATB- REAL:                  4116K  SLOTS:                     0K
+              VIRT- ALLOC:      11M SHRD:       0M
+ IEF375I  JOB/KC03D5BA/START 2019217.0040
+ IEF033I  JOB/KC03D5BA/STOP  2019217.0040 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0MACRO=F                                                                                                                          
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 *************************************************                                        
+                                       2 *                                                                                        
+                                       3 *  Program:     ASSIGN9                                                                  
+                                       4 *  Programmer:  Cory Stojan                                                              
+                                       5 *                                                                                        
+                                       6 ************************************************************                             
+                                       7 * NAME: STRCPY                                                                           
+                                       8 *                                                                                        
+                                       9 * FUNCTION: COPY THE SOURCE STRING INTO THE                                              
+                                      10 *    DEST STRING. IT LOOKS FOR '00', TO END                                              
+                                      11 *                                                                                        
+                                      12 * REG USED:                                                                              
+                                      13 *   4  PTR TO SOURCE                                                                     
+                                      14 *   5  PTR TO DEST                                                                       
+                                      15 **********************************************                                           
+                                      16          MACRO                                                                           
+                                      17          STRCPY &SOURCE,&DEST                                                            
+                                      18          AIF    ('&SOURCE' EQ '').ERROR       CHECK FOR VAILD DATA                       
+                                      19          AIF    ('&DEST' EQ '').ERROR         CHECK FOR VAILD DATA                       
+                                      20          STM    4,5,A&SYSNDX                  STORE PARMS                                
+                                      21          B      B&SYSNDX                      SKIP SAVE AREA                             
+                                      22 A&SYSNDX DS     2F                            SAVE AREA                                  
+                                      23 B&SYSNDX LA     4,&SOURCE                     SAVE PTR TO SOURCE                         
+                                      24          LA     5,&DEST                       SAVE PTR TO DEST                           
+                                      25 TOP&SYSNDX      DS   0H                       TOP OF LOOP                                
+                                      26          MVC    0(1,5),0(4)                   COPY CHAR                                  
+                                      27          CLI    0(5),X'00'                    CHECK TO SEE IF '00'                       
+                                      28          BE     END&SYSNDX                    IF 00 END LOOP                             
+                                      29          A      4,=F'1'                       MOVE PTR OVER 1 CHAR                       
+                                      30          A      5,=F'1'                       MOVE PTR OVER 1 CHAR                       
+                                      31          B      TOP&SYSNDX                    GOTO TOP LOOP                              
+                                      32 END&SYSNDX      DS   0H                                                                  
+                                      33          LM     4,5,A&SYSNDX                  RESTORE REGISTERS                          
+                                      34          MEXIT                                EXIT MACRO                                 
+                                      35 .ERROR   MNOTE 'INVALID PARAMETER!!!'   ERRROR MISSING ARUGUMNT                          
+                                      36          MEND                                 END                                        
+                                      37 **********************************************                                           
+                                      38 * NAME: STRCPY                                                                           
+                                      39 *                                                                                        
+                                      40 * FUNCTION: 3 WAY BRANCH, BRANCHES DEPENDING                                             
+                                      41 *            IF &VALUE IS POS, NEG, OR ZERO                                              
+                                      42 *                                                                                        
+                                      43 **********************************************                                           
+                                      44          MACRO                                                                           
+                                      45          IF3   &VALUE,&NEG,&ZERO,&POS                                                    
+                                      46          AIF   ('&VALUE' EQ '').ERROR       CHECK FOR VAILD DATA                         
+                                      47          AIF   ('&NEG' EQ '').ERROR         CHECK FOR VAILD DATA                         
+                                      48          AIF   ('&ZERO' EQ '').ERROR        CHECK FOR VAILD DATA                         
+                                      49          AIF   ('&POS' EQ '').ERROR         CHECK FOR VAILD DATA                         
+                                      50          L     3,&VALUE                      LOAD &VALUE                                 
+                                      51          C     3,=F'0'                       COMPARE WITH ZERO                           
+                                      52          BE    EAQ&SYSNDX                    IF EQUAL BRANCH TO ZERO                     
+1                                                                                                               PAGE    2         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                      53          BH    POS&SYSNDX                    IF POS BRANCH TO POS                        
+                                      54          BL    NEG&SYSNDX                    IF NEG BRANCH TO NEG                        
+                                      55 EAQ&SYSNDX     DS    0H                                                                  
+                                      56          B     &ZERO                         BRANCH                                      
+                                      57 POS&SYSNDX     DS    0H                                                                  
+                                      58          B     &POS                          BRANCH                                      
+                                      59 NEG&SYSNDX     DS    0H                                                                  
+                                      60          B     &NEG                          BRANCH                                      
+                                      61 END&SYSNDX     DS    0H                                                                  
+                                      62          MEXIT                               EXIT?                                       
+                                      63 .ERROR   MNOTE 'INVALID PARAMETER!!!'                                                    
+                                      64          MEND                                END MACRO                                   
+                                      65 **********************************************************************                   
+                                      66 *                                                                    *                   
+                                      67 *            Name:  DRIVER.                                          *                   
+                                      68 *                                                                    *                   
+                                      69 *        Function:  Test platform for macros.                        *                   
+                                      70 *                                                                    *                   
+                                      71 *           Input:  None.                                            *                   
+                                      72 *                                                                    *                   
+                                      73 *          Output:  Results of the tests.                            *                   
+                                      74 *                                                                    *                   
+                                      75 *     ENTER Conds:  14 -- Return address to the operating            *                   
+                                      76 *                         system.                                    *                   
+                                      77 *                   15 -- Address of ENTER to the program.           *                   
+                                      78 *                                                                    *                   
+                                      79 *  Register Usage:   2 -- Used in addresses in macro tests.          *                   
+                                      80 *                   11 -- Second base register.                      *                   
+                                      81 *                   12 -- Base register.                             *                   
+                                      82 *                                                                    *                   
+                                      83 *      Exit Conds:  14 -- Return address to the operating            *                   
+                                      84 *                         system.                                    *                   
+                                      85 *                                                                    *                   
+                                      86 **********************************************************************                   
+                                      87 *                                                                                        
+ 000000                               88 DRIVER   CSECT                         Beginning of the program.                         
+                                      89 *                                                                                        
+                                      91 *                                                                                        
+                                      92 *  Standard Entry linkage.                                                               
+                                      93 *                                                                                        
+ 000000 90EC D00C            0000C    94          STM   14,12,12(13)                                                              
+ 000004 18CF                          95          LR    12,15                                                                     
+ 000000                               96          USING DRIVER,12                                                                 
+ 000006 41E0 C624            00624    97          LA    14,DRIVSAV                                                                
+ 00000A 50DE 0004            00004    98          ST    13,4(14)                                                                  
+ 00000E 50ED 0008            00008    99          ST    14,8(13)                                                                  
+ 000012 18DE                         100          LR    13,14                                                                     
+                                     101 *                                                                                        
+ 000014 E020 C4F4 001A 004F4         102          XPRNT =C'1Results of testing macros',26   Print the title.                      
+                                     103 *                                                                                        
+ 00001A E020 C428 0020 00428         104          XPRNT  =CL32'-First we test the STRCPY macro.',32                               
+ 000020 E020 C50E 0026 0050E         105          XPRNT  =CL38' In printing strings, the zero byte is',38                         
+ 000026 E020 C534 0012 00534         106          XPRNT  =CL18' represented by *.',18                                             
+                                     107 *                                                                                        
+                                     108 * The first block of code deals with the STRCPY macro.                                   
+                                     109 *                                                                                        
+ 00002C E020 C586 0021 00586         110          XPRNT  =CL33'-1st test:  a string of length 0.',33                              
+1                                                                                                               PAGE    3         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000032 9200 C66C      0066C         111          MVI    OLD,X'00'                                                                
+ 000036 D20D C66D C546 0066D 00546   112          MVC    OLD+1(14),=14C' '                                                        
+ 00003C D20E C67B C5A7 0067B 005A7   113          MVC    NEW(15),=15C' '                                                          
+                                     114          STRCPY OLD,NEW                                                                  
+ 000042 9045 C04C            0004C   115+         STM    4,5,A0001                     STORE PARMS                                
+ 000046 47F0 C054            00054   116+         B      B0001                         SKIP SAVE AREA                             
+ 00004C                              117+A0001    DS     2F                            SAVE AREA                                  
+ 000054 4140 C66C            0066C   118+B0001    LA     4,OLD                         SAVE PTR TO SOURCE                         
+ 000058 4150 C67B            0067B   119+         LA     5,NEW                         SAVE PTR TO DEST                           
+ 00005C                              120+TOP0001         DS   0H                       TOP OF LOOP                                
+ 00005C D200 5000 4000 00000 00000   121+         MVC    0(1,5),0(4)                   COPY CHAR                                  
+ 000062 9500 5000      00000         122+         CLI    0(5),X'00'                    CHECK TO SEE IF '00'                       
+ 000066 4780 C076            00076   123+         BE     END0001                       IF 00 END LOOP                             
+ 00006A 5A40 C498            00498   124+         A      4,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 00006E 5A50 C498            00498   125+         A      5,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 000072 47F0 C05C            0005C   126+         B      TOP0001                       GOTO TOP LOOP                              
+ 000076                              127+END0001         DS   0H                                                                  
+ 000076 9845 C04C            0004C   128+         LM     4,5,A0001                     RESTORE REGISTERS                          
+ 00007A D203 C6A1 C49C 006A1 0049C   129          MVC    L1(4),=CL4'   0'                                                         
+ 000080 E020 C68C 0019 0068C         130          XPRNT  PLINE1,25                                                                
+ 000086 4110 C448            00448   131          LA     1,=A(NEW,LENGTH)                                                         
+ 00008A 45A0 C3E6            003E6   132          BAL    10,STRLEN                                                                
+ 00008E D203 C6BA C4A0 006BA 004A0   133          MVC    L2(4),=X'40202120'                                                       
+ 000094 DE03 C6BA C68A 006BA 0068A   134          ED     L2(4),LENGTH                                                             
+ 00009A E020 C6A5 0019 006A5         135          XPRNT  PLINE2,25                                                                
+ 0000A0 DC0E C66C C706 0066C 00706   136          TR     OLD(15),TRTABLE                                                          
+ 0000A6 D20E C6D3 C66C 006D3 0066C   137          MVC    V3(15),OLD                                                               
+ 0000AC E020 C6BE 0024 006BE         138          XPRNT  PLINE3,36                                                                
+ 0000B2 DC0E C67B C706 0067B 00706   139          TR     NEW(15),TRTABLE                                                          
+ 0000B8 D20E C6F7 C67B 006F7 0067B   140          MVC    V4(15),NEW                                                               
+ 0000BE E020 C6E2 0024 006E2         141          XPRNT  PLINE4,36                                                                
+                                     142 *                                                                                        
+ 0000C4 E020 C554 0022 00554         143          XPRNT  =CL34'-2nd test:  a string of all 0s.',34                                
+ 0000CA D20E C66C C5B6 0066C 005B6   144          MVC    OLD(15),=15X'00'                                                         
+ 0000D0 D20E C67B C5A7 0067B 005A7   145          MVC    NEW(15),=15C' '                                                          
+                                     146          STRCPY OLD,NEW                                                                  
+ 0000D6 9045 C0E0            000E0   147+         STM    4,5,A0002                     STORE PARMS                                
+ 0000DA 47F0 C0E8            000E8   148+         B      B0002                         SKIP SAVE AREA                             
+ 0000E0                              149+A0002    DS     2F                            SAVE AREA                                  
+ 0000E8 4140 C66C            0066C   150+B0002    LA     4,OLD                         SAVE PTR TO SOURCE                         
+ 0000EC 4150 C67B            0067B   151+         LA     5,NEW                         SAVE PTR TO DEST                           
+ 0000F0                              152+TOP0002         DS   0H                       TOP OF LOOP                                
+ 0000F0 D200 5000 4000 00000 00000   153+         MVC    0(1,5),0(4)                   COPY CHAR                                  
+ 0000F6 9500 5000      00000         154+         CLI    0(5),X'00'                    CHECK TO SEE IF '00'                       
+ 0000FA 4780 C10A            0010A   155+         BE     END0002                       IF 00 END LOOP                             
+ 0000FE 5A40 C498            00498   156+         A      4,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 000102 5A50 C498            00498   157+         A      5,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 000106 47F0 C0F0            000F0   158+         B      TOP0002                       GOTO TOP LOOP                              
+ 00010A                              159+END0002         DS   0H                                                                  
+ 00010A 9845 C0E0            000E0   160+         LM     4,5,A0002                     RESTORE REGISTERS                          
+ 00010E D203 C6A1 C49C 006A1 0049C   161          MVC    L1(4),=CL4'   0'                                                         
+ 000114 E020 C68C 0019 0068C         162          XPRNT  PLINE1,25                                                                
+ 00011A 4110 C448            00448   163          LA     1,=A(NEW,LENGTH)                                                         
+ 00011E 45A0 C3E6            003E6   164          BAL    10,STRLEN                                                                
+ 000122 D203 C6BA C4A0 006BA 004A0   165          MVC    L2(4),=X'40202120'                                                       
+ 000128 DE03 C6BA C68A 006BA 0068A   166          ED     L2(4),LENGTH                                                             
+ 00012E E020 C6A5 0019 006A5         167          XPRNT  PLINE2,25                                                                
+1                                                                                                               PAGE    4         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000134 DC0E C66C C706 0066C 00706   168          TR     OLD(15),TRTABLE                                                          
+ 00013A D20E C6D3 C66C 006D3 0066C   169          MVC    V3(15),OLD                                                               
+ 000140 E020 C6BE 0024 006BE         170          XPRNT  PLINE3,36                                                                
+ 000146 DC0E C67B C706 0067B 00706   171          TR     NEW(15),TRTABLE                                                          
+ 00014C D20E C6F7 C67B 006F7 0067B   172          MVC    V4(15),NEW                                                               
+ 000152 E020 C6E2 0024 006E2         173          XPRNT  PLINE4,36                                                                
+                                     174 *                                                                                        
+ 000158 E020 C5C5 0027 005C5         175          XPRNT  =CL39'-3rd test:  a string of alternating 0s.',39                        
+ 00015E D205 C66C C576 0066C 00576   176          MVC    OLD(6),=XL6'C100C200C300'                                                
+ 000164 D208 C672 C5EC 00672 005EC   177          MVC    OLD+6(9),=9C' '                                                          
+ 00016A D20E C67B C5A7 0067B 005A7   178          MVC    NEW(15),=15C' '                                                          
+                                     179          STRCPY OLD,NEW                                                                  
+ 000170 9045 C178            00178   180+         STM    4,5,A0003                     STORE PARMS                                
+ 000174 47F0 C180            00180   181+         B      B0003                         SKIP SAVE AREA                             
+ 000178                              182+A0003    DS     2F                            SAVE AREA                                  
+ 000180 4140 C66C            0066C   183+B0003    LA     4,OLD                         SAVE PTR TO SOURCE                         
+ 000184 4150 C67B            0067B   184+         LA     5,NEW                         SAVE PTR TO DEST                           
+ 000188                              185+TOP0003         DS   0H                       TOP OF LOOP                                
+ 000188 D200 5000 4000 00000 00000   186+         MVC    0(1,5),0(4)                   COPY CHAR                                  
+ 00018E 9500 5000      00000         187+         CLI    0(5),X'00'                    CHECK TO SEE IF '00'                       
+ 000192 4780 C1A2            001A2   188+         BE     END0003                       IF 00 END LOOP                             
+ 000196 5A40 C498            00498   189+         A      4,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 00019A 5A50 C498            00498   190+         A      5,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 00019E 47F0 C188            00188   191+         B      TOP0003                       GOTO TOP LOOP                              
+ 0001A2                              192+END0003         DS   0H                                                                  
+ 0001A2 9845 C178            00178   193+         LM     4,5,A0003                     RESTORE REGISTERS                          
+ 0001A6 D203 C6A1 C4A4 006A1 004A4   194          MVC    L1(4),=CL4'   1'                                                         
+ 0001AC E020 C68C 0019 0068C         195          XPRNT  PLINE1,25                                                                
+ 0001B2 4110 C448            00448   196          LA     1,=A(NEW,LENGTH)                                                         
+ 0001B6 45A0 C3E6            003E6   197          BAL    10,STRLEN                                                                
+ 0001BA D203 C6BA C4A0 006BA 004A0   198          MVC    L2(4),=X'40202120'                                                       
+ 0001C0 DE03 C6BA C68A 006BA 0068A   199          ED     L2(4),LENGTH                                                             
+ 0001C6 E020 C6A5 0019 006A5         200          XPRNT  PLINE2,25                                                                
+ 0001CC DC0E C66C C706 0066C 00706   201          TR     OLD(15),TRTABLE                                                          
+ 0001D2 D20E C6D3 C66C 006D3 0066C   202          MVC    V3(15),OLD                                                               
+ 0001D8 E020 C6BE 0024 006BE         203          XPRNT  PLINE3,36                                                                
+ 0001DE DC0E C67B C706 0067B 00706   204          TR     NEW(15),TRTABLE                                                          
+ 0001E4 D20E C6F7 C67B 006F7 0067B   205          MVC    V4(15),NEW                                                               
+ 0001EA E020 C6E2 0024 006E2         206          XPRNT  PLINE4,36                                                                
+                                     207 *                                                                                        
+ 0001F0 E020 C5F5 001F 005F5         208          XPRNT  =CL31'-4th test:  an ordinary string.',31                                
+ 0001F6 D20A C66C C614 0066C 00614   209          MVC    OLD(11),=CL11'Test 4 data'                                               
+ 0001FC D203 C677 C4A8 00677 004A8   210          MVC    OLD+11(4),=X'00404040'                                                   
+                                     211          STRCPY OLD,NEW                                                                  
+ 000202 9045 C20C            0020C   212+         STM    4,5,A0004                     STORE PARMS                                
+ 000206 47F0 C214            00214   213+         B      B0004                         SKIP SAVE AREA                             
+ 00020C                              214+A0004    DS     2F                            SAVE AREA                                  
+ 000214 4140 C66C            0066C   215+B0004    LA     4,OLD                         SAVE PTR TO SOURCE                         
+ 000218 4150 C67B            0067B   216+         LA     5,NEW                         SAVE PTR TO DEST                           
+ 00021C                              217+TOP0004         DS   0H                       TOP OF LOOP                                
+ 00021C D200 5000 4000 00000 00000   218+         MVC    0(1,5),0(4)                   COPY CHAR                                  
+ 000222 9500 5000      00000         219+         CLI    0(5),X'00'                    CHECK TO SEE IF '00'                       
+ 000226 4780 C236            00236   220+         BE     END0004                       IF 00 END LOOP                             
+ 00022A 5A40 C498            00498   221+         A      4,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 00022E 5A50 C498            00498   222+         A      5,=F'1'                       MOVE PTR OVER 1 CHAR                       
+ 000232 47F0 C21C            0021C   223+         B      TOP0004                       GOTO TOP LOOP                              
+ 000236                              224+END0004         DS   0H                                                                  
+1                                                                                                               PAGE    5         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 000236 9845 C20C            0020C   225+         LM     4,5,A0004                     RESTORE REGISTERS                          
+ 00023A DC0E C66C C706 0066C 00706   226          TR     OLD(15),TRTABLE                                                          
+ 000240 D20E C6D3 C66C 006D3 0066C   227          MVC    V3(15),OLD                                                               
+ 000246 D203 C6A1 C4AC 006A1 004AC   228          MVC    L1(4),=CL4'  11'                                                         
+ 00024C E020 C68C 0019 0068C         229          XPRNT  PLINE1,25                                                                
+ 000252 4110 C448            00448   230          LA     1,=A(NEW,LENGTH)                                                         
+ 000256 45A0 C3E6            003E6   231          BAL    10,STRLEN                                                                
+ 00025A D203 C6BA C4A0 006BA 004A0   232          MVC    L2(4),=X'40202120'                                                       
+ 000260 DE03 C6BA C68A 006BA 0068A   233          ED     L2(4),LENGTH                                                             
+ 000266 DC0E C67B C706 0067B 00706   234          TR     NEW(15),TRTABLE                                                          
+ 00026C D20E C6F7 C67B 006F7 0067B   235          MVC    V4(15),NEW                                                               
+ 000272 E020 C6A5 0019 006A5         236          XPRNT  PLINE2,25                                                                
+ 000278 E020 C6BE 0024 006BE         237          XPRNT  PLINE3,36                                                                
+ 00027E E020 C6E2 0024 006E2         238          XPRNT  PLINE4,36                                                                
+                                     239 *                                                                                        
+                                     240 * The last three tests all have missing values.                                          
+                                     241 * We should have MNOTEs.                                                                 
+                                     242 *                                                                                        
+                                     243 * 5th test:  Missing SOURCE                                                              
+                                     244          STRCPY ,NEW                                                                     
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+                                     246 *                                                                                        
+                                     247 * 6th test:  Missing DEST                                                                
+                                     248          STRCPY OLD                                                                      
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+                                     250 *                                                                                        
+                                     251 * 7th test:  Missing both arguments                                                      
+                                     252          STRCPY                                                                          
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+                                     254 *                                                                                        
+                                     255 * The next block of code deals with the IF3 macro.                                       
+                                     256 *                                                                                        
+ 000284 E020 C4B0 0024 004B0         257          XPRNT =CL36'0-----------------------------------',36                            
+ 00028A E020 C4D4 001C 004D4         258          XPRNT =CL28'0Next we test the IF3 macro.',28                                    
+                                     259 *                                      Print a heading.                                  
+                                     260 *                                                                                        
+                                     261 * These first three calls to IF3 all have problems which should                          
+                                     262 * result in MNOTEs.                                                                      
+                                     263 *                                                                                        
+                                     264          IF3   TESTMEZ,LOC0NEG,LOC0ZERO                                                  
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+ 000290 47F0 C2AE            002AE   266          B     DONE0                                                                     
+                                     267 *                                                                                        
+ 000294                              268 LOC0NEG  DS    0H                                                                        
+ 000294 E020 C450 0018 00450         269          XPRNT =CL24'0Result:  negative value',24                                        
+ 00029A 47F0 C2AE            002AE   270          B     DONE0                                                                     
+ 00029E                              271 LOC0ZERO DS    0H                                                                        
+ 00029E E020 C468 0018 00468         272          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 0002A4 47F0 C2AE            002AE   273          B     DONE0                                                                     
+ 0002A8                              274 LOC0POS  DS    0H                                                                        
+ 0002A8 E020 C480 0018 00480         275          XPRNT =CL24'0Result:  positive value',24                                        
+ 0002AE                              276 DONE0    DS    0H                                                                        
+                                     277 *                                                                                        
+                                     278          IF3   TESTMEZ,LOC1NEG                                                           
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+ 0002AE 47F0 C2CC            002CC   280          B     DONE1                                                                     
+                                     281 *                                                                                        
+1                                                                                                               PAGE    6         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 0002B2                              282 LOC1NEG  DS    0H                                                                        
+ 0002B2 E020 C450 0018 00450         283          XPRNT =CL24'0Result:  negative value',24                                        
+ 0002B8 47F0 C2CC            002CC   284          B     DONE1                                                                     
+ 0002BC                              285 LOC1ZERO DS    0H                                                                        
+ 0002BC E020 C468 0018 00468         286          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 0002C2 47F0 C2CC            002CC   287          B     DONE1                                                                     
+ 0002C6                              288 LOC1POS  DS    0H                                                                        
+ 0002C6 E020 C480 0018 00480         289          XPRNT =CL24'0Result:  positive value',24                                        
+ 0002CC                              290 DONE1    DS    0H                                                                        
+                                     291 *                                                                                        
+                                     292          IF3   TESTMEZ                                                                   
+ ----->AS***MNOTE***    1,INVALID PARAMETER!!!                                                                    <-ERROR         
+ 0002CC 47F0 C2EA            002EA   294          B     DONE2                                                                     
+                                     295 *                                                                                        
+ 0002D0                              296 LOC2NEG  DS    0H                                                                        
+ 0002D0 E020 C450 0018 00450         297          XPRNT =CL24'0Result:  negative value',24                                        
+ 0002D6 47F0 C2EA            002EA   298          B     DONE2                                                                     
+ 0002DA                              299 LOC2ZERO DS    0H                                                                        
+ 0002DA E020 C468 0018 00468         300          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 0002E0 47F0 C2EA            002EA   301          B     DONE2                                                                     
+ 0002E4                              302 LOC2POS  DS    0H                                                                        
+ 0002E4 E020 C480 0018 00480         303          XPRNT =CL24'0Result:  positive value',24                                        
+ 0002EA                              304 DONE2    DS    0H                                                                        
+                                     305 *                                                                                        
+                                     306 * These next three calls to IF3 should all work normally.                                
+                                     307 *                                                                                        
+                                     308          IF3   TESTMEN,LOC3NEG,LOC3ZERO,LOC3POS                                          
+ 0002EA 5830 C808            00808   309+         L     3,TESTMEN                     LOAD &VALUE                                 
+ 0002EE 5930 C4F0            004F0   310+         C     3,=F'0'                       COMPARE WITH ZERO                           
+ 0002F2 4780 C2FE            002FE   311+         BE    EAQ0011                       IF EQUAL BRANCH TO ZERO                     
+ 0002F6 4720 C302            00302   312+         BH    POS0011                       IF POS BRANCH TO POS                        
+ 0002FA 4740 C306            00306   313+         BL    NEG0011                       IF NEG BRANCH TO NEG                        
+ 0002FE                              314+EAQ0011        DS    0H                                                                  
+ 0002FE 47F0 C318            00318   315+         B     LOC3ZERO                      BRANCH                                      
+ 000302                              316+POS0011        DS    0H                                                                  
+ 000302 47F0 C322            00322   317+         B     LOC3POS                       BRANCH                                      
+ 000306                              318+NEG0011        DS    0H                                                                  
+ 000306 47F0 C30E            0030E   319+         B     LOC3NEG                       BRANCH                                      
+ 00030A                              320+END0011        DS    0H                                                                  
+ 00030A 47F0 C328            00328   321          B     DONE3                                                                     
+                                     322 *                                                                                        
+ 00030E                              323 LOC3NEG  DS    0H                                                                        
+ 00030E E020 C450 0018 00450         324          XPRNT =CL24'0Result:  negative value',24                                        
+ 000314 47F0 C328            00328   325          B     DONE3                                                                     
+ 000318                              326 LOC3ZERO DS    0H                                                                        
+ 000318 E020 C468 0018 00468         327          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 00031E 47F0 C328            00328   328          B     DONE3                                                                     
+ 000322                              329 LOC3POS  DS    0H                                                                        
+ 000322 E020 C480 0018 00480         330          XPRNT =CL24'0Result:  positive value',24                                        
+ 000328                              331 DONE3    DS    0H                                                                        
+                                     332 *                                                                                        
+                                     333          IF3   TESTMEZ,LOC4NEG,LOC4ZERO,LOC4POS                                          
+ 000328 5830 C80C            0080C   334+         L     3,TESTMEZ                     LOAD &VALUE                                 
+ 00032C 5930 C4F0            004F0   335+         C     3,=F'0'                       COMPARE WITH ZERO                           
+ 000330 4780 C33C            0033C   336+         BE    EAQ0012                       IF EQUAL BRANCH TO ZERO                     
+ 000334 4720 C340            00340   337+         BH    POS0012                       IF POS BRANCH TO POS                        
+ 000338 4740 C344            00344   338+         BL    NEG0012                       IF NEG BRANCH TO NEG                        
+1                                                                                                               PAGE    7         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+ 00033C                              339+EAQ0012        DS    0H                                                                  
+ 00033C 47F0 C352            00352   340+         B     LOC4ZERO                      BRANCH                                      
+ 000340                              341+POS0012        DS    0H                                                                  
+ 000340 47F0 C35C            0035C   342+         B     LOC4POS                       BRANCH                                      
+ 000344                              343+NEG0012        DS    0H                                                                  
+ 000344 47F0 C348            00348   344+         B     LOC4NEG                       BRANCH                                      
+ 000348                              345+END0012        DS    0H                                                                  
+                                     346 *                                                                                        
+ 000348                              347 LOC4NEG  DS    0H                                                                        
+ 000348 E020 C450 0018 00450         348          XPRNT =CL24'0Result:  negative value',24                                        
+ 00034E 47F0 C362            00362   349          B     DONE4                                                                     
+ 000352                              350 LOC4ZERO DS    0H                                                                        
+ 000352 E020 C468 0018 00468         351          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 000358 47F0 C362            00362   352          B     DONE4                                                                     
+ 00035C                              353 LOC4POS  DS    0H                                                                        
+ 00035C E020 C480 0018 00480         354          XPRNT =CL24'0Result:  positive value',24                                        
+ 000362                              355 DONE4    DS    0H                                                                        
+                                     356 *                                                                                        
+                                     357          IF3   TESTMEP,LOC5NEG,LOC5ZERO,LOC5POS                                          
+ 000362 5830 C810            00810   358+         L     3,TESTMEP                     LOAD &VALUE                                 
+ 000366 5930 C4F0            004F0   359+         C     3,=F'0'                       COMPARE WITH ZERO                           
+ 00036A 4780 C376            00376   360+         BE    EAQ0013                       IF EQUAL BRANCH TO ZERO                     
+ 00036E 4720 C37A            0037A   361+         BH    POS0013                       IF POS BRANCH TO POS                        
+ 000372 4740 C37E            0037E   362+         BL    NEG0013                       IF NEG BRANCH TO NEG                        
+ 000376                              363+EAQ0013        DS    0H                                                                  
+ 000376 47F0 C38C            0038C   364+         B     LOC5ZERO                      BRANCH                                      
+ 00037A                              365+POS0013        DS    0H                                                                  
+ 00037A 47F0 C396            00396   366+         B     LOC5POS                       BRANCH                                      
+ 00037E                              367+NEG0013        DS    0H                                                                  
+ 00037E 47F0 C382            00382   368+         B     LOC5NEG                       BRANCH                                      
+ 000382                              369+END0013        DS    0H                                                                  
+                                     370 *                                                                                        
+ 000382                              371 LOC5NEG  DS    0H                                                                        
+ 000382 E020 C450 0018 00450         372          XPRNT =CL24'0Result:  negative value',24                                        
+ 000388 47F0 C39C            0039C   373          B     DONE5                                                                     
+ 00038C                              374 LOC5ZERO DS    0H                                                                        
+ 00038C E020 C468 0018 00468         375          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 000392 47F0 C39C            0039C   376          B     DONE5                                                                     
+ 000396                              377 LOC5POS  DS    0H                                                                        
+ 000396 E020 C480 0018 00480         378          XPRNT =CL24'0Result:  positive value',24                                        
+ 00039C                              379 DONE5    DS    0H                                                                        
+                                     380 *                                                                                        
+                                     381 * This last call should also work but should look odd.                                   
+                                     382 *                                                                                        
+                                     383          IF3   TESTMEN,LOC6POS,LOC6NEG,LOC6ZERO                                          
+ 00039C 5830 C808            00808   384+         L     3,TESTMEN                     LOAD &VALUE                                 
+ 0003A0 5930 C4F0            004F0   385+         C     3,=F'0'                       COMPARE WITH ZERO                           
+ 0003A4 4780 C3B0            003B0   386+         BE    EAQ0014                       IF EQUAL BRANCH TO ZERO                     
+ 0003A8 4720 C3B4            003B4   387+         BH    POS0014                       IF POS BRANCH TO POS                        
+ 0003AC 4740 C3B8            003B8   388+         BL    NEG0014                       IF NEG BRANCH TO NEG                        
+ 0003B0                              389+EAQ0014        DS    0H                                                                  
+ 0003B0 47F0 C3BC            003BC   390+         B     LOC6NEG                       BRANCH                                      
+ 0003B4                              391+POS0014        DS    0H                                                                  
+ 0003B4 47F0 C3C6            003C6   392+         B     LOC6ZERO                      BRANCH                                      
+ 0003B8                              393+NEG0014        DS    0H                                                                  
+ 0003B8 47F0 C3D0            003D0   394+         B     LOC6POS                       BRANCH                                      
+ 0003BC                              395+END0014        DS    0H                                                                  
+1                                                                                                               PAGE    8         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     396 *                                                                                        
+ 0003BC                              397 LOC6NEG  DS    0H                                                                        
+ 0003BC E020 C450 0018 00450         398          XPRNT =CL24'0Result:  negative value',24                                        
+ 0003C2 47F0 C3D6            003D6   399          B     DONE6                                                                     
+ 0003C6                              400 LOC6ZERO DS    0H                                                                        
+ 0003C6 E020 C468 0018 00468         401          XPRNT =CL24'0Result:  zero value    ',24                                        
+ 0003CC 47F0 C3D6            003D6   402          B     DONE6                                                                     
+ 0003D0                              403 LOC6POS  DS    0H                                                                        
+ 0003D0 E020 C480 0018 00480         404          XPRNT =CL24'0Result:  positive value',24                                        
+ 0003D6                              405 DONE6    DS    0H                                                                        
+                                     406 *                                                                                        
+ 0003D6                              407 DONEIF3  DS    0H                                                                        
+                                     408 *                                                                                        
+ 0003D6 E020 C61F 0001 0061F         409          XPRNT =C' ',1                                                                   
+ 0003DC E020 C57C 000A 0057C         410          XPRNT =CL10'0All done!',10                                                      
+ 0003E2 47F0 C418            00418   411          B     TIMETOGO                                                                  
+                                     412 *                                                                                        
+                                     413 *********************************************************************                    
+                                     414 *                                                                                        
+                                     415 * STRLEN is an internal subroutine to calculate a string length.                         
+                                     416 *                                                                                        
+                                     417 * It has two arguments:  the address of a string and the address                         
+                                     418 * of a 2-byte packed decimal field in which to report the length.                        
+                                     419 *                                                                                        
+                                     420 * Register  1 = address of parameter list                                                
+                                     421 *           2 = address of the string; from 0(1)                                         
+                                     422 *           3 = address of the counter; from 4(1)                                        
+                                     423 *          10 = return address                                                           
+                                     424 *                                                                                        
+                                     425 *********************************************************************                    
+                                     426 *                                                                                        
+ 0003E6                              427 STRLEN   DS    0H                                                                        
+ 0003E6 9023 C410            00410   428          STM   2,3,SLSAVE          Save the registers                                    
+ 0003EA 9823 1000            00000   429          LM    2,3,0(1)            Unload the parameter list                             
+ 0003EE F810 3000 C620 00000 00620   430          ZAP   0(2,3),=P'0'        Initialize the counter                                
+ 0003F4 9500 2000      00000         431 SLLOOP   CLI   0(2),X'00'          Have we reached the delimiter?                        
+ 0003F8 4780 C40A            0040A   432          BE    SLEND               If so, end the loop                                   
+ 0003FC FA10 3000 C621 00000 00621   433          AP    0(2,3),=P'1'        Increment the counter                                 
+ 000402 4120 2001            00001   434          LA    2,1(0,2)            Advance string pointer                                
+ 000406 47F0 C3F4            003F4   435          B     SLLOOP              Repeat the loop                                       
+ 00040A                              436 SLEND    DS    0H                                                                        
+ 00040A 9823 C410            00410   437          LM    2,3,SLSAVE          Restore the registers                                 
+ 00040E 07FA                         438          BR    10                  Return to the caller                                  
+ 000410                              439 SLSAVE   DS    2F                                                                        
+                                     440 *                                                                                        
+ 000418                              441 TIMETOGO DS    0H                                                                        
+                                     442 *                                                                                        
+                                     443 *  Standard exit linkage                                                                 
+                                     444 *                                                                                        
+ 000418 58DD 0004            00004   445          L     13,4(13)                                                                  
+ 00041C 98EC D00C            0000C   446          LM    14,12,12(13)                                                              
+ 000420 07FE                         447          BR    14                                                                        
+1                                                                                                               PAGE    9         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                                                                                                                  
+                                                                                                                                  
+                                     449 **********************************************************************                   
+                                     450 *          The storage section for DRIVER starts here.               *                   
+                                     451 **********************************************************************                   
+                                     452 *                                                                                        
+                                     453          LTORG                                                                           
+ 000428 60C68999A2A340A6             454                =CL32'-First we test the STRCPY macro.'                                   
+ 000448 0000067B0000068A             455                =A(NEW,LENGTH)                                                            
+ 000450 F0D985A2A493A37A             456                =CL24'0Result:  negative value'                                           
+ 000468 F0D985A2A493A37A             457                =CL24'0Result:  zero value    '                                           
+ 000480 F0D985A2A493A37A             458                =CL24'0Result:  positive value'                                           
+ 000498 00000001                     459                =F'1'                                                                     
+ 00049C 404040F0                     460                =CL4'   0'                                                                
+ 0004A0 40202120                     461                =X'40202120'                                                              
+ 0004A4 404040F1                     462                =CL4'   1'                                                                
+ 0004A8 00404040                     463                =X'00404040'                                                              
+ 0004AC 4040F1F1                     464                =CL4'  11'                                                                
+ 0004B0 F060606060606060             465                =CL36'0-----------------------------------'                               
+ 0004D4 F0D585A7A340A685             466                =CL28'0Next we test the IF3 macro.'                                       
+ 0004F0 00000000                     467                =F'0'                                                                     
+ 0004F4 F1D985A2A493A3A2             468                =C'1Results of testing macros'                                            
+ 00050E 40C9954097998995             469                =CL38' In printing strings, the zero byte is'                             
+ 000534 409985979985A285             470                =CL18' represented by *.'                                                 
+ 000546 4040404040404040             471                =14C' '                                                                   
+ 000554 60F2958440A385A2             472                =CL34'-2nd test:  a string of all 0s.'                                    
+ 000576 C100C200C300                 473                =XL6'C100C200C300'                                                        
+ 00057C F0C1939340849695             474                =CL10'0All done!'                                                         
+ 000586 60F1A2A340A385A2             475                =CL33'-1st test:  a string of length 0.'                                  
+ 0005A7 4040404040404040             476                =15C' '                                                                   
+ 0005B6 0000000000000000             477                =15X'00'                                                                  
+ 0005C5 60F3998440A385A2             478                =CL39'-3rd test:  a string of alternating 0s.'                            
+ 0005EC 4040404040404040             479                =9C' '                                                                    
+ 0005F5 60F4A38840A385A2             480                =CL31'-4th test:  an ordinary string.'                                    
+ 000614 E385A2A340F44084             481                =CL11'Test 4 data'                                                        
+ 00061F 40                           482                =C' '                                                                     
+ 000620 0C                           483                =P'0'                                                                     
+ 000621 1C                           484                =P'1'                                                                     
+                                     485 *                                                                                        
+ 000624 FFFFFFFFFFFFFFFF             486 DRIVSAV  DC    18F'-1'                 Save area for linkage.                            
+                                     487 *                                                                                        
+ 00066C                              488 OLD      DS    15C                                                                       
+ 00067B                              489 NEW      DS    15C                                                                       
+                                     490 *                                                                                        
+ 00068A                              491 LENGTH   DS    PL2                                                                       
+                                     492 *                                                                                        
+ 00068C F0                           493 PLINE1   DC    C'0'                                                                      
+ 00068D D3859587A3884096             494          DC    CL20'Length of source:   '                                                
+ 0006A1                              495 L1       DS    4C                                                                        
+                                     496 *                                                                                        
+ 0006A5 F0                           497 PLINE2   DC    C'0'                                                                      
+ 0006A6 D3859587A3884096             498          DC    CL20'Length of new copy: '                                                
+ 0006BA                              499 L2       DS    4C                                                                        
+                                     500 *                                                                                        
+ 0006BE F0                           501 PLINE3   DC    C'0'                                                                      
+ 0006BF E58193A485409686             502          DC    CL20'Value of source:    '                                                
+ 0006D3                              503 V3       DS    15C                                                                       
+1                                                                                                               PAGE   10         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                     504 *                                                                                        
+ 0006E2 F0                           505 PLINE4   DC    C'0'                                                                      
+ 0006E3 E58193A485409686             506          DC    CL20'Value of new copy:  '                                                
+ 0006F7                              507 V4       DS    15C                                                                       
+                                     508 *                                                                                        
+ 000706 5C01020304050607             509 TRTABLE  DC    XL16'5C0102030405060708090A0B0C0D0E0F'                                    
+ 000716 1011121314151617             510          DC    XL16'101112131415161718191A1B1C1D1E1F'                                    
+ 000726 2021222324252627             511          DC    XL16'202122232425262728292A2B2C2D2E2F'                                    
+ 000736 3031323334353637             512          DC    XL16'303132333435363738393A3B3C3D3E3F'                                    
+ 000746 4041424344454647             513          DC    XL16'404142434445464748494A4B4C4D4E4F'                                    
+ 000756 5051525354555657             514          DC    XL16'505152535455565758595A5B5C5D5E5F'                                    
+ 000766 6061626364656667             515          DC    XL16'606162636465666768696A6B6C6D6E6F'                                    
+ 000776 7071727374757677             516          DC    XL16'707172737475767778797A7B7C7D7E7F'                                    
+ 000786 8081828384858687             517          DC    XL16'808182838485868788898A8B8C8D8E8F'                                    
+ 000796 9091929394959697             518          DC    XL16'909192939495969798999A9B9C9D9E9F'                                    
+ 0007A6 A0A1A2A3A4A5A6A7             519          DC    XL16'A0A1A2A3A4A5A6A7A8A9AAABACADAEAF'                                    
+ 0007B6 B0B1B2B3B4B5B6B7             520          DC    XL16'B0B1B2B3B4B5B6B7B8B9BABBBCBDBEBF'                                    
+ 0007C6 C0C1C2C3C4C5C6C7             521          DC    XL16'C0C1C2C3C4C5C6C7C8C9CACBCCCDCECF'                                    
+ 0007D6 D0D1D2D3D4D5D6D7             522          DC    XL16'D0D1D2D3D4D5D6D7D8D9DADBDCDDDEDF'                                    
+ 0007E6 E0E1E2E3E4E5E6E7             523          DC    XL16'E0E1E2E3E4E5E6E7E8E9EAEBECEDEEEF'                                    
+ 0007F6 F0F1F2F3F4F5F6F7             524          DC    XL16'F0F1F2F3F4F5F6F7F8F9FAFBFCFDFEFF'                                    
+                                     525 *                                                                                        
+                                     526 *                                                                                        
+ 000808 FFFFFFFF                     527 TESTMEN  DC    F'-1'                                                                     
+ 00080C 00000000                     528 TESTMEZ  DC    F'0'                                                                      
+ 000810 00000001                     529 TESTMEP  DC    F'1'                                                                      
+                                     530 *                                                                                        
+                                     531 **********************************************************************                   
+                                     532 *                 The DRIVER program ends here.                      *                   
+                                     533 **********************************************************************                   
+                                     534          END   DRIVER                  End of the overall program.                       
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:   26004 HIGH:    3084 LEAVING:  464480 FREE BYTES. AVERAGE:       54 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.002 SECS,   267500 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+1Results of testing macros                                                                                                        
+-First we test the STRCPY macro.                                                                                                  
+ In printing strings, the zero byte is                                                                                            
+ represented by *.                                                                                                                
+-1st test:  a string of length 0.                                                                                                 
+0Length of source:      0                                                                                                         
+0Length of new copy:    0                                                                                                         
+0Value of source:    *                                                                                                            
+0Value of new copy:  *                                                                                                            
+-2nd test:  a string of all 0s.                                                                                                   
+0Length of source:      0                                                                                                         
+0Length of new copy:    0                                                                                                         
+0Value of source:    ***************                                                                                              
+0Value of new copy:  *                                                                                                            
+-3rd test:  a string of alternating 0s.                                                                                           
+0Length of source:      1                                                                                                         
+0Length of new copy:    1                                                                                                         
+0Value of source:    A*B*C*                                                                                                       
+0Value of new copy:  A*                                                                                                           
+-4th test:  an ordinary string.                                                                                                   
+0Length of source:     11                                                                                                         
+0Length of new copy:   11                                                                                                         
+0Value of source:    Test 4 data*                                                                                                 
+0Value of new copy:  Test 4 data*                                                                                                 
+0-----------------------------------                                                                                              
+0Next we test the IF3 macro.                                                                                                      
+0Result:  negative value                                                                                                          
+0Result:  zero value                                                                                                              
+0Result:  positive value                                                                                                          
+0Result:  positive value                                                                                                          
+                                                                                                                                  
+1All done!                                                                                                                        
+0*** EXECUTION TIME =    0.000 SECS.       306 INSTRUCTIONS EXECUTED -   306000 INSTRUCTIONS/SEC ***                              
+0*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                

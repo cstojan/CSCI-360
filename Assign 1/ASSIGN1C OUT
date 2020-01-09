@@ -1,0 +1,92 @@
+1                    J E S 2  J O B  L O G  --  S Y S T E M  S 0 W 1  --  N O D E  Z O S K C T R         
+0 
+ 13.32.34 JOB01589 ---- SUNDAY,    23 JUN 2019 ----
+ 13.32.34 JOB01589  IRR010I  USERID KC03D5B  IS ASSIGNED TO THIS JOB.
+ 13.32.34 JOB01589  ICH70001I KC03D5B  LAST ACCESS AT 13:32:20 ON SUNDAY, JUNE 23, 2019
+ 13.32.34 JOB01589  $HASP373 KC03D5BP STARTED - INIT 2    - CLASS A        - SYS S0W1
+ 13.32.34 JOB01589  -                                         --TIMINGS (MINS.)--            ----PAGING COUNTS---
+ 13.32.34 JOB01589  -JOBNAME  STEPNAME PROCSTEP    RC   EXCP    TCB    SRB  CLOCK   SERV  PG   PAGE   SWAP    VIO SWAPS
+ 13.32.34 JOB01589  -KC03D5BP                      00     36 ******    .00     .0     84   0      0      0      0     0
+ 13.32.34 JOB01589  -KC03D5BP ENDED.  NAME-CORY STOJAN          TOTAL TCB CPU TIME=   .00  TOTAL ELAPSED TIME=    .0
+ 13.32.34 JOB01589  $HASP395 KC03D5BP ENDED
+0------ JES2 JOB STATISTICS ------
+-  23 JUN 2019 JOB EXECUTION DATE
+-           38 CARDS READ
+-           88 SYSOUT PRINT RECORDS
+-            4 SYSOUT PUNCH RECORDS
+-            6 SYSOUT SPOOL KBYTES
+-         0.00 MINUTES EXECUTION TIME
+         1 //KC03D5BP JOB ,'CORY STOJAN',MSGCLASS=H                                JOB01589
+         2 //STEP1 EXEC PGM=ASSIST                                                         
+         3 //STEPLIB DD DSN=KC02293.ASSIST.LOADLIB,DISP=SHR                                
+         4 //SYSPRINT DD SYSOUT=*                                                          
+         5 //SYSIN DD *                                                                    
+ ICH70001I KC03D5B  LAST ACCESS AT 13:32:20 ON SUNDAY, JUNE 23, 2019
+ IEF236I ALLOC. FOR KC03D5BP STEP1
+ IGD103I SMS ALLOCATED TO DDNAME STEPLIB
+ IEF237I JES2 ALLOCATED TO SYSPRINT
+ IEF237I JES2 ALLOCATED TO SYSIN
+ IEF142I KC03D5BP STEP1 - STEP WAS EXECUTED - COND CODE 0000
+ IGD104I KC02293.ASSIST.LOADLIB                       RETAINED,  DDNAME=STEPLIB 
+ IEF285I   KC03D5B.KC03D5BP.JOB01589.D0000102.?         SYSOUT        
+ IEF285I   KC03D5B.KC03D5BP.JOB01589.D0000101.?         SYSIN         
+ IEF373I STEP/STEP1   /START 2019174.1332
+ IEF032I STEP/STEP1   /STOP  2019174.1332 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+         VIRT:   584K  SYS:   268K  EXT:        0K  SYS:    11380K
+         ATB- REAL:                     0K  SLOTS:                     0K
+              VIRT- ALLOC:       0M SHRD:       0M
+ IEF375I  JOB/KC03D5BP/START 2019174.1332
+ IEF033I  JOB/KC03D5BP/STOP  2019174.1332 
+         CPU:     0 HR  00 MIN  00.00 SEC    SRB:     0 HR  00 MIN  00.00 SEC    
+1*** ASSIST 4.0/A2-05/15/82  470/V7A/0:OS/VS2  INS=SDFP7/X=BGHO, CHECK/TRC/=1180, OPTS=CDKMPR FROM PENN ST*NIU COMPSCI*LT         
+0                                                                                                                                 
+0                                                                                                               PAGE    1         
+0  LOC  OBJECT CODE    ADDR1 ADDR2  STMT   SOURCE STATEMENT                                                                       
+                                       1 ********************************************                                             
+                                       2 * EXAMPLE PROGRAM 1C                                                                       
+                                       3 *                                                                                        
+                                       4 * NAME:  CORY STOJAN                                                                     
+                                       5 *                                                                                        
+                                       6 * Register Usage                                                                         
+                                       7 *                                                                                        
+                                       8 *  5     NUM1                                                                            
+                                       9 *  6     NUM2                                                                            
+                                      10 *  7     NUM1                                                                            
+                                      11 *  8     NUM2                                                                            
+                                      12 * 15     Base register                                                                   
+                                      13 *                                                                                        
+                                      14 ********************************************                                             
+ 000000                               15 MAIN     CSECT                                                                           
+ 000000                               16          USING MAIN,15                                                                   
+ 000000 5850 002C            0002C    17          L     5,44(0,0)                                                                 
+ 000004 5860 0030            00030    18          L     6,48(0,0)                                                                 
+ 000008 1A56                          19          AR    5,6                                                                       
+ 00000A 5050 0034            00034    20          ST    5,52(0,0)                                                                 
+ 00000E 5870 002C            0002C    21          L     7,44(0,0)                                                                 
+ 000012 5880 0030            00030    22          L     8,48(0,0)                                                                 
+ 000016 1B78                          23          SR    7,8                                                                       
+ 000018 5070 0038            00038    24          ST    7,56(0,0)                                                                 
+ 00001C E060 0034 0004 00034          25          XDUMP 52(0,0),4                                                                 
+ 000022 E060 0038 0004 00038          26          XDUMP 56(0,0),4                                                                 
+ 000028 07FE                          27          BR    14                                                                        
+ 00002C 00000043                      28 NUM1     DC    F'67'                                                                     
+ 000030 000000CB                      29 NUM2     DC    F'203'                                                                    
+ 000034                               30 SUM      DS    F                                                                         
+ 000038                               31 DIFF     DS    F                                                                         
+                                      32          END   MAIN                                                                      
+0***  NO   STATEMENTS FLAGGED -  NO   WARNINGS,  NO   ERRORS                                                                      
+0*** DYNAMIC CORE AREA USED:  LOW:     668 HIGH:     384 LEAVING:  492516 FREE BYTES. AVERAGE:       31 BYTES/STMT ***            
+0*** ASSEMBLY TIME =    0.000 SECS,    33000 STATEMENTS/SEC ***                                                                   
+0*** PROGRAM EXECUTION BEGINNING - ANY OUTPUT BEFORE EXECUTION TIME MESSAGE IS PRODUCED BY USER PROGRAM ***                       
+0BEGIN XSNAP - CALL     1 AT D0000022 USER STORAGE                                                                                
+0                             CORE ADDRESSES SPECIFIED-     000034 TO 000038                                                      
+ 000020   0004E060 00380004 07FEF5F5 00000043    000000CB 0000010E FFFFFF78 F5F5F5F5   *..........55................5555*         
+0                                                                                                                                 
+0BEGIN XSNAP - CALL     2 AT D0000028 USER STORAGE                                                                                
+0                             CORE ADDRESSES SPECIFIED-     000038 TO 00003C                                                      
+ 000020   0004E060 00380004 07FEF5F5 00000043    000000CB 0000010E FFFFFF78 F5F5F5F5   *..........55................5555*         
+0                                                                                                                                 
+0*** EXECUTION TIME =    0.000 SECS.        11 INSTRUCTIONS EXECUTED -    11000 INSTRUCTIONS/SEC ***                              
+1*** FIRST CARD NOT READ: NO CARDS READ:FILE UNOPENED                                                                             
+0*** AM004 - NORMAL USER TERMINATION BY RETURN ***                                                                                
